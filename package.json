@@ -1,0 +1,39 @@
+{
+  "name": "htmlcompiler",
+  "version": "1.0.0",
+  "description": "",
+  "main": "./lib/htmlcompiler.js",
+  "dependencies": {
+  },
+  "devDependencies": {
+    "babel-cli": "^6.0.0",
+    "babel-preset-es2015": "^6.18.0",
+    "browserify": "13.1.1",
+    "babelify": "^7.3.0"
+  },
+  "scripts": {
+     "babel": "babel src -d lib",
+     "build": "browserify src/htmlcompiler.babel.js -t babelify -o lib/htmlcompiler.js"
+  },
+  "devDependencies": {
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nojaja/node-htmlcompiler.git"
+  },
+  "keywords": [
+    "html",
+    "xml",
+    "rss",
+    "parser"
+  ],
+  "directories": {
+    "lib": "./lib"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/nojaja/node-htmlcompiler/issues"
+  },
+  "homepage": "https://github.com/nojaja/node-htmlcompiler"
+}
