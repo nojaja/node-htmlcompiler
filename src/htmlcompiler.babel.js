@@ -3,6 +3,7 @@ Copyright 2016 - 2016
 ***********************************************/
 /* v1.0.0 */
 
+
   class Builder {
     constructor(options) {
       var self = this;
@@ -13,21 +14,28 @@ Copyright 2016 - 2016
       return this.nodes.join(arg || '\n');
     }
 
-    mkAttribute_text(key, value, attribute) {
-      attribute.push(`${key}='${value}'`);
-    }
-    mkAttribute_script(key, value, attribute) {}
-    mkTagElement_open(src, isContainer) {
-      this.nodes.push(`<${src.name}${src.attributes?' '+this.mkAttribute(src.attributes):''} ${isContainer?'':'/'}>`);
-    }
-    mkTagElement_close(src) {
-      this.nodes.push(`</${src.name}>`);
-    }
-    mkTextElement(src) {
-      this.nodes.push(`${src.data}`);
-    }
-    mkScriptElement_open(src, isContainer) {}
-    mkScriptElement_close(src) {}
+    mkAttribute_text(compiler, key, value, attribute) {}
+    mkAttribute_script(compiler, key, value, attribute) {}
+    mkTagElement_open(compiler, src, isContainer) {}
+    mkTagElement_close(compiler, src) {}
+    mkTextElement(compiler, src) {}
+    mkScriptElement_open(compiler, src, isContainer) {}
+    mkScriptElement_close(compiler, src) {}
+  }
+
+  class HtmlBuilder extends Builder{
+      mkAttribute_text(compiler, key, value, attribute) {
+        attribute.push(`${key}='${value}'`);
+      }
+      mkTagElement_open(compiler, src, isContainer) {
+        this.nodes.push(`<${src.name}${src.attributes?' '+compiler.mkAttribute(src.attributes):''} ${isContainer?'':'/'}>`);
+      }
+      mkTagElement_close(compiler, src) {
+        this.nodes.push(`</${src.name}>`);
+      }
+      mkTextElement(compiler, src) {
+        this.nodes.push(`${src.data}`);
+      }
   }
 
   class Compiler {
@@ -42,11 +50,11 @@ Copyright 2016 - 2016
       Object.keys(attributes).forEach(function(attrkey) {
         if (attributes[attrkey].dataType == 'script') {
           this._builders.forEach(function(_builder) {
-            _builder.mkAttribute_script(attrkey, attributes[attrkey].value || '', attribute);
+            _builder.mkAttribute_script(this, attrkey, attributes[attrkey].value || '', attribute);
           }, this);
         } else {
           this._builders.forEach(function(_builder) {
-            _builder.mkAttribute_text(attrkey, attributes[attrkey].value || '', attribute);
+            _builder.mkAttribute_text(this, attrkey, attributes[attrkey].value || '', attribute);
           }, this);
         }
       }, this);
@@ -55,36 +63,36 @@ Copyright 2016 - 2016
     mkTagElement(src) {
       if (src.children) {
         this._builders.forEach(function(_builder) {
-          _builder.mkTagElement_open(src, true);
+          _builder.mkTagElement_open(this, src, true);
         }, this);
         src.children.forEach(function(_src) {
           this.mkNodes(_src);
         }, this);
 
         this._builders.forEach(function(_builder) {
-          _builder.mkTagElement_close(src);
+          _builder.mkTagElement_close(this, src);
         }, this);
 
       } else {
         this._builders.forEach(function(_builder) {
-          _builder.mkTagElement_open(src, false);
+          _builder.mkTagElement_open(this, src, false);
         }, this);
       }
     }
     mkScriptElement(src) {
       if (src.children) {
         this._builders.forEach(function(_builder) {
-          _builder.mkScriptElement_open(src, true);
+          _builder.mkScriptElement_open(this, src, true);
         }, this);
         src.children.forEach(function(_src) {
           this.mkNodes(_src);
         }, this);
         this._builders.forEach(function(_builder) {
-          _builder.mkScriptElement_close(src);
+          _builder.mkScriptElement_close(this, src);
         }, this);
       } else {
         this._builders.forEach(function(_builder) {
-          _builder.mkScriptElement_open(src, false);
+          _builder.mkScriptElement_open(this, src, false);
         }, this);
       }
     }
@@ -92,7 +100,7 @@ Copyright 2016 - 2016
       if (src.type == 'tag') this.mkTagElement(src);
       if (src.type == 'text')
         this._builders.forEach(function(_builder) {
-          _builder.mkTextElement(src);
+          _builder.mkTextElement(this,src);
         }, this);
       if (src.type == 'script') this.mkScriptElement(src);
       return;
