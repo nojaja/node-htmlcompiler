@@ -3,22 +3,6 @@ Copyright 2016 - 2016
 ***********************************************/
 /* v1.0.0 */
 
-(function() {
-
-  var exports;
-  if (typeof(module) !== 'undefined' && typeof(module.exports) !== 'undefined') {
-    exports = module.exports;
-  } else {
-    exports = {};
-    if (!self.Tautologistics) {
-      self.Tautologistics = {};
-    }
-    if (self.Tautologistics.NodeHtmlCompiler) {
-      return;
-    }
-    self.Tautologistics.NodeHtmlCompiler = exports;
-  }
-
   class Builder {
     constructor(options) {
       var self = this;
@@ -118,8 +102,3 @@ Copyright 2016 - 2016
     }
 
   }
-
-  exports.Compiler = Compiler;
-  exports.Builder = Builder;
-
-})();
