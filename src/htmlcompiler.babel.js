@@ -3,7 +3,6 @@ Copyright 2016 - 2016
 ***********************************************/
 /* v1.0.0 */
 
-
   class Builder {
     constructor(options) {
       var self = this;
@@ -14,8 +13,8 @@ Copyright 2016 - 2016
       return this.nodes.join(arg || '\n');
     }
 
-    mkAttribute_text(compiler, key, value, attribute) {}
-    mkAttribute_script(compiler, key, value, attribute) {}
+    mkAttribute_text(compiler, key, attribute, node) {}
+    mkAttribute_script(compiler, key, attribute, node) {}
     mkTagElement_open(compiler, src, isContainer) {}
     mkTagElement_close(compiler, src) {}
     mkTextElement(compiler, src) {}
@@ -24,11 +23,11 @@ Copyright 2016 - 2016
   }
 
   class HtmlBuilder extends Builder{
-      mkAttribute_text(compiler, key, value, attribute) {
-        attribute.push(`${key}='${value}'`);
+      mkAttribute_text(compiler, key, attribute, node) {
+        node.push(`${key}='${attribute.value||''}'`);
       }
       mkTagElement_open(compiler, src, isContainer) {
-        this.nodes.push(`<${src.name}${src.attributes?' '+compiler.mkAttribute(src.attributes):''} ${isContainer?'':'/'}>`);
+        this.nodes.push(`<${src.name}${src.attributes?' '+compiler.mkAttribute(src.attributes,this):''} ${isContainer?'':'/'}>`);
       }
       mkTagElement_close(compiler, src) {
         this.nodes.push(`</${src.name}>`);
@@ -45,20 +44,20 @@ Copyright 2016 - 2016
         this._options = options;
       }
       //**Public**//
-    mkAttribute(attributes) {
-      var attribute = [];
+    mkAttribute(attributes,_builder) {
+      var node = [];
       Object.keys(attributes).forEach(function(attrkey) {
         if (attributes[attrkey].dataType == 'script') {
-          this._builders.forEach(function(_builder) {
-            _builder.mkAttribute_script(this, attrkey, attributes[attrkey].value || '', attribute);
-          }, this);
+          //this._builders.forEach(function(_builder) {
+            _builder.mkAttribute_script(this, attrkey, attributes[attrkey] || '', node);
+          //}, this);
         } else {
-          this._builders.forEach(function(_builder) {
-            _builder.mkAttribute_text(this, attrkey, attributes[attrkey].value || '', attribute);
-          }, this);
+          //this._builders.forEach(function(_builder) {
+            _builder.mkAttribute_text(this, attrkey, attributes[attrkey] || '', node);
+          //}, this);
         }
       }, this);
-      return attribute.join(' ');
+      return node.join(' ');
     }
     mkTagElement(src) {
       if (src.children) {
@@ -109,7 +108,7 @@ Copyright 2016 - 2016
       return this.mkNodes(src);
     }
 
-  };
+  }
 
 window.Builder = Builder; // 追加
 window.HtmlBuilder = HtmlBuilder; // 追加
