@@ -109,4 +109,8 @@ Copyright 2016 - 2016
       return this.mkNodes(src);
     }
 
-  }
+  };
+
+window.Builder = Builder; // 追加
+window.HtmlBuilder = HtmlBuilder; // 追加
+window.Compiler = Compiler; // 追加
