@@ -24,7 +24,7 @@ Copyright 2016 - 2016
 
   class HtmlBuilder extends Builder{
       mkAttribute_text(compiler, key, attribute, node) {
-        node.push(`${key}='${attribute.value||''}'`);
+        node.push(`${key}='${attribute.data||''}'`);
       }
       mkTagElement_open(compiler, src, isContainer) {
         this.nodes.push(`<${src.name}${src.attributes?' '+compiler.mkAttribute(src.attributes,this):''} ${isContainer?'':'/'}>`);
@@ -47,15 +47,17 @@ Copyright 2016 - 2016
     mkAttribute(attributes,_builder) {
       var node = [];
       Object.keys(attributes).forEach(function(attrkey) {
-        if (attributes[attrkey].dataType == 'script') {
-          //this._builders.forEach(function(_builder) {
-            _builder.mkAttribute_script(this, attrkey, attributes[attrkey] || '', node);
-          //}, this);
-        } else {
-          //this._builders.forEach(function(_builder) {
-            _builder.mkAttribute_text(this, attrkey, attributes[attrkey] || '', node);
-          //}, this);
-        }
+        attributes[attrkey].forEach(function(attribute) {
+          if(attribute.type == 'script') {
+            //this._builders.forEach(function(_builder) {
+              _builder.mkAttribute_script(this, attrkey, attribute, node);
+            //}, this);
+          } else {
+            //this._builders.forEach(function(_builder) {
+              _builder.mkAttribute_text(this, attrkey, attribute, node);
+            //}, this);
+          }
+        }, this);
       }, this);
       return node.join(' ');
     }
