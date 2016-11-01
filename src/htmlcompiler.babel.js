@@ -16,31 +16,32 @@ Copyright 2016 - 2016
       this.nodes.push(node);
     }
 
-    mkAttribute(compiler, attributes) {}
-    mkAttribute_text(compiler, key, attribute) {}
-    mkAttribute_script(compiler, key, attribute) {}
-    mkTagElement(compiler, src, isContainer) {}
-    mkTagElement_open(compiler, src, attributes, isContainer) {}
-    mkTagElement_close(compiler, src) {}
-    mkNodes(compiler,src) {}
-    mkTextElement(compiler, src) {}
-    mkCommentElement(compiler, src) {}
-    mkScriptElement(compiler, src, isContainer) {}
-    mkScriptElement_open(compiler, src, isContainer) {}
-    mkScriptElement_close(compiler, src) {}
+    beforeCreateAttribute(attributes) {}
+    createAttribute_text(key, attribute) {}
+    createAttribute_script(key, attribute) {}
+    beforeCreateTagElement(src, isContainer) {}
+    createTagElement_open(src, attributes, isContainer) {}
+    createTagElement_close(src) {}
+    beforeCreateNodes(src) {}
+    createTextElement(src) {}
+    createCommentElement(src) {}
+    beforeCreateScriptElement(src, isContainer) {}
+    createScriptElement_open(src, isContainer) {}
+    createScriptElement_close(src) {}
+    beforeCompile(src) {}
   }
 
   class HtmlBuilder extends Builder{
-      mkAttribute_text(compiler, key, attribute) {
+      createAttribute_text(key, attribute) {
         return(`${key}='${attribute.data||''}'`);
       }
-      mkTagElement_open(compiler, src, attributes, isContainer) {
+      createTagElement_open(src, attributes, isContainer) {
         return(`<${src.name}${attributes} ${isContainer?'':'/'}>`);
       }
-      mkTagElement_close(compiler, src) {
+      createTagElement_close(src) {
         return(`</${src.name}>`);
       }
-      mkTextElement(compiler, src) {
+      createTextElement(src) {
         return(`${src.data}`);
       }
   }
@@ -52,97 +53,97 @@ Copyright 2016 - 2016
         this._options = options;
       }
       //**Public**//
-    mkAttribute(attributes,_builder) {
+    createAttribute(attributes,_builder) {
       var node = [];
       Object.keys(attributes).forEach(function(attrkey) {
         attributes[attrkey].forEach(function(attribute) {
           if(attribute.type == 'script') {
-            //this._builders.forEach(function(_builder) {
-              node.push(_builder.mkAttribute_script(this, attrkey, attribute));
-            //}, this);
+              node.push(_builder.createAttribute_script(attrkey, attribute));
           } else {
-            //this._builders.forEach(function(_builder) {
-              node.push(_builder.mkAttribute_text(this, attrkey, attribute));
-            //}, this);
+              node.push(_builder.createAttribute_text(attrkey, attribute));
           }
         }, this);
       }, this);
       return node.join(' ');
     }
     
-    mkTagElement(src) {
+    createTagElement(src) {
       //srcの加工を行う
       this._builders.forEach(function(_builder) {
-        _builder.mkTagElement(this, src, src.children?true:false);
-        if(src.attributes)_builder.mkAttribute(this, src.attributes);
+        _builder.beforeCreateTagElement(src, src.children?true:false);
+        if(src.attributes)_builder.beforeCreateAttribute(src.attributes);
       }, this);
       
       if (src.children) {//This is a container element
         this._builders.forEach(function(_builder) {
-          var attributes = src.attributes?' '+this.mkAttribute(src.attributes,_builder):'';
-          _builder.addNode(_builder.mkTagElement_open(this, src, attributes, true));
+          var attributes = src.attributes?' '+this.createAttribute(src.attributes,_builder):'';
+          _builder.addNode(_builder.createTagElement_open(src, attributes, true));
         }, this);
         
         src.children.forEach(function(_src) {
-          this.mkNodes(_src);
+          this.createNodes(_src);
         }, this);
 
         this._builders.forEach(function(_builder) {
-          _builder.addNode(_builder.mkTagElement_close(this, src));
+          _builder.addNode(_builder.createTagElement_close(src));
         }, this);
 
       } else {//This is not a container element
         this._builders.forEach(function(_builder) {
-          var attributes = src.attributes?' '+this.mkAttribute(src.attributes,_builder):'';
-          _builder.addNode(_builder.mkTagElement_open(this, src, attributes, false));
+          var attributes = src.attributes?' '+this.createAttribute(src.attributes,_builder):'';
+          _builder.addNode(_builder.createTagElement_open(src, attributes, false));
         }, this);
       }
     }
     
-    mkScriptElement(src) {
+    createScriptElement(src) {
       //srcの加工を行う
       this._builders.forEach(function(_builder) {
-        _builder.mkScriptElement(this, src, src.children?true:false);
+        _builder.beforeCreateScriptElement(src, src.children?true:false);
       }, this);
       
       if (src.children) {//This is a container element
         this._builders.forEach(function(_builder) {
-          _builder.addNode(_builder.mkScriptElement_open(this, src, true));
+          _builder.addNode(_builder.createScriptElement_open(src, true));
         }, this);
         src.children.forEach(function(_src) {
-          this.mkNodes(_src);
+          this.createNodes(_src);
         }, this);
         this._builders.forEach(function(_builder) {
-          _builder.addNode(_builder.mkScriptElement_close(this, src));
+          _builder.addNode(_builder.createScriptElement_close(src));
         }, this);
       } else {//This is not a container element
         this._builders.forEach(function(_builder) {
-          _builder.addNode(_builder.mkScriptElement_open(this, src, false));
+          _builder.addNode(_builder.createScriptElement_open(src, false));
         }, this);
       }
     }
     
-    mkNodes(src) {
+    createNodes(src) {
       //srcの加工を行う
       this._builders.forEach(function(_builder) {
-        _builder.mkNodes(this,src);
+        _builder.beforeCreateNodes(src);
       }, this);
       
-      if (src.type == 'tag') this.mkTagElement(src);
+      if (src.type == 'tag') this.createTagElement(src);
       if (src.type == 'text')
         this._builders.forEach(function(_builder) {
-          _builder.addNode(_builder.mkTextElement(this,src));
+          _builder.addNode(_builder.createTextElement(src));
         }, this);
-      if (src.type == 'script')this.mkScriptElement(src);
+      if (src.type == 'script')this.createScriptElement(src);
       if (src.type == 'comment')
         this._builders.forEach(function(_builder) {
-          _builder.addNode(_builder.mkCommentElement(this,src));
+          _builder.addNode(_builder.createCommentElement(src));
         }, this);
       return;
     }
     
     compile(src) {
-      return this.mkNodes(src);
+      //srcの加工を行う
+      this._builders.forEach(function(_builder) {
+        _builder.beforeCompile(src);
+      }, this);
+      return this.createNodes(src);
     }
 
   }
