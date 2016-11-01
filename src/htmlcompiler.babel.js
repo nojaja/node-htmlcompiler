@@ -35,6 +35,9 @@ Copyright 2016 - 2016
       createAttribute_text(key, attribute) {
         return(`${key}='${attribute.data||''}'`);
       }
+      createAttribute_script(key, attribute) {
+        return(`${key}='{${attribute.data||''}}'`);
+      }
       createTagElement_open(src, attributes, isContainer) {
         return(`<${src.name}${attributes} ${isContainer?'':'/'}>`);
       }
@@ -44,7 +47,40 @@ Copyright 2016 - 2016
       createTextElement(src) {
         return(`${src.data}`);
       }
+      createScriptElement_open(src, isContainer){
+        if(!isContainer) return(`{${src.data}}`);
+      }
   }
+
+  class CSSBuilder extends Builder{
+    createAttribute_text(key, attribute) {
+      if(key=='style'){
+         return(`${attribute.data||''}`);
+      }
+    };
+    createAttribute_script(key, attribute) {
+      if(key=='style'){
+        return(`${attribute.data||''}`);
+      }
+    };
+
+    createTagElement_open(src, attributes, isContainer) {
+      if(!src.attributes) return;
+      var id = '';
+      if(src.attributes['id']){
+        src.attributes['id'].forEach(function(_src) {
+            if(_src.type=='text') id = `${id}${_src.data}`;
+            if(_src.type=='script' && _src.langName== 'singleMustache' ) id = `${id}{${_src.data}}`;
+        }, this);
+      }
+      if(id){this.nodes.push(`
+        .${id} {
+          ${' '+attributes}
+        }`);
+        delete src.attributes['style'];
+      }
+    }
+  };
 
   class Compiler {
     constructor(builders = [], options) {
@@ -74,7 +110,7 @@ Copyright 2016 - 2016
         if(src.attributes)_builder.beforeCreateAttribute(src.attributes);
       }, this);
       
-      if (src.children) {//This is a container element
+      if (src.children && src.children.length>0) {//This is a container element
         this._builders.forEach(function(_builder) {
           var attributes = src.attributes?' '+this.createAttribute(src.attributes,_builder):'';
           _builder.addNode(_builder.createTagElement_open(src, attributes, true));
@@ -102,7 +138,7 @@ Copyright 2016 - 2016
         _builder.beforeCreateScriptElement(src, src.children?true:false);
       }, this);
       
-      if (src.children) {//This is a container element
+      if (src.children && src.children.length>0) {//This is a container element
         this._builders.forEach(function(_builder) {
           _builder.addNode(_builder.createScriptElement_open(src, true));
         }, this);
