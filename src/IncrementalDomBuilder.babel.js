@@ -1,7 +1,7 @@
 
-import { Builder} from './htmlcompiler.babel.js'
+import Builder from './Builder.babel.js'
 
-export class IncrementalDomBuilder extends Builder{
+export default class IncrementalDomBuilder extends Builder{
     createAttribute_text(key, attribute) {
       return(`${key}=\\'${attribute.data}\\'`);
     };
