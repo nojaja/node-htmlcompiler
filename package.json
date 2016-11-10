@@ -14,7 +14,7 @@
   },
   "scripts": {
     "babel": "babel src -d lib",
-    "build": "browserify src/htmlcompiler.babel.js -t babelify -o lib/htmlcompiler.js"
+    "build": "browserify src/index.babel.js -t babelify -o lib/htmlcompiler.js"
   },
   "repository": {
     "type": "git",

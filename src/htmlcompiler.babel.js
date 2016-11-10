@@ -3,7 +3,7 @@ Copyright 2016 - 2016
 ***********************************************/
 /* v1.0.0 */
 
-  class Builder {
+  export class Builder {
     constructor(options) {
       var self = this;
       this._options = options;
@@ -31,7 +31,7 @@ Copyright 2016 - 2016
     beforeCompile(src) {}
   }
 
-  class HtmlBuilder extends Builder{
+  export class HtmlBuilder extends Builder{
       createAttribute_text(key, attribute) {
         return(`${key}='${attribute.data||''}'`);
       }
@@ -52,7 +52,7 @@ Copyright 2016 - 2016
       }
   }
 
-  class CSSBuilder extends Builder{
+  export class CSSBuilder extends Builder{
     createAttribute_text(key, attribute) {
       if(key=='style'){
          return(`${attribute.data||''}`);
@@ -82,7 +82,7 @@ Copyright 2016 - 2016
     }
   };
 
-  class Compiler {
+  export class Compiler {
     constructor(builders = [], options) {
         var self = this;
         this._builders = builders;
@@ -183,7 +183,3 @@ Copyright 2016 - 2016
     }
 
   }
-
-window.Builder = Builder;
-window.HtmlBuilder = HtmlBuilder;
-window.Compiler = Compiler;
