@@ -1,4 +1,7 @@
-export class IncrementalDomBuilder extends window.Builder{
+
+import { Builder} from './htmlcompiler.babel.js'
+
+export class IncrementalDomBuilder extends Builder{
     createAttribute_text(key, attribute) {
       return(`${key}=\\'${attribute.data}\\'`);
     };
