@@ -6,8 +6,11 @@ Copyright 2016 - 2016
 
 //http://yutapon.hatenablog.com/entry/2015/02/09/090000
 
-import { Builder, HtmlBuilder, CSSBuilder, Compiler} from './htmlcompiler.babel.js'
-import { IncrementalDomBuilder} from './IncrementalDomBuilder.js'
+import Compiler from './htmlcompiler.babel.js'
+import Builder from './Builder.babel.js'
+import HtmlBuilder from './HtmlBuilder.babel.js'
+import CSSBuilder from './CSSBuilder.babel.js'
+import IncrementalDomBuilder from './IncrementalDomBuilder.babel.js'
 
 
 window.Builder = Builder;
