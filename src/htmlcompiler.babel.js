@@ -21,7 +21,7 @@ Copyright 2016 - 2016
           }
         }, this);
       }, this);
-      return node.join(' ');
+      return node.join(_builder.attributeDelimiter?_builder.attributeDelimiter:' ');
     }
     
     createTagElement(src) {
@@ -33,7 +33,7 @@ Copyright 2016 - 2016
       
       if (src.children && src.children.length>0) {//This is a container element
         this._builders.forEach(function(_builder) {
-          var attributes = src.attributes?' '+this.createAttribute(src.attributes,_builder):'';
+          var attributes = src.attributes?(_builder.attributeDelimiter?_builder.attributeDelimiter:' ')+this.createAttribute(src.attributes,_builder):'';
           _builder.addNode(_builder.createTagElement_open(src, attributes, true));
         }, this);
         
