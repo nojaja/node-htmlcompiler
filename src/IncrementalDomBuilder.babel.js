@@ -2,34 +2,34 @@
 import Builder from './Builder.babel.js'
 
 export default class IncrementalDomBuilder extends Builder{
-    createAttribute_text(key, attribute) {
+    createAttribute_text(key, attribute,state) {
       return(`${key}=\\'${attribute.data}\\'`);
     };
-    createAttribute_script(key, attribute) {
+    createAttribute_script(key, attribute,state) {
       return(`${key}='+${attribute.data}+'`);
     };
-    createTagElement_open(src, attributes, isContainer) {
-      return(`${isContainer?'elementOpen':'elementVoid'}('${src.name}', '','${attributes}'); `);
+    createTagElement_open(src, attributes, isContainer,state) {
+      return(`${Array(state.depth).join('\t')}${isContainer?'elementOpen':'elementVoid'}('${src.name}', '','${attributes}');// ${state.nodes.length}/${state.nodes.pos}`);
     }
-    createTagElement_close(src) {
-      return(`elementClose('${src.name}'); `);
+    createTagElement_close(src,state) {
+      return(`${Array(state.depth).join('\t')}elementClose('${src.name}');// ${state.nodes.length}/${state.nodes.pos} `);
     }
-    createTextElement(src) {
-      return(`text('${src.data.replace(/\n/g,"").replace(/\'/g,"\\\'")}'); `);
+    createTextElement(src,state) {
+      return(`${Array(state.depth).join('\t')}text('${src.data.replace(/\n/g,"").replace(/\'/g,"\\\'")}'); `);
     }
-    createCommentElement(src) {
-      return(`/* ${src.data.replace(/\n/g,"").replace(/\'/g,"\\\'")} */`);
+    createCommentElement(src,state) {
+      return(`${Array(state.depth).join('\t')}/* ${src.data.replace(/\n/g,"").replace(/\'/g,"\\\'")} */`);
     }  
-    createScriptElement_open(src, isContainer) {
+    createScriptElement_open(src, isContainer,state) {
       if (src.name == 'if') {
-        return(`if( ${src.data}){ `);
+        return(`${Array(state.depth).join('\t')}if( ${src.data}){ `);
       }
       if (src.name == 'each') {
-        return(`each( ${src.data}){ `);
+        return(`${Array(state.depth).join('\t')}each( ${src.data}){ `);
       }
-        return(`text( ${src.data}) `);
+        return(`${Array(state.depth).join('\t')}text( ${src.data}) `);
     }
-    createScriptElement_close(src) {
-      return(`});`);
+    createScriptElement_close(src,state) {
+      return(`${Array(state.depth).join('\t')}});`);
     }
 }

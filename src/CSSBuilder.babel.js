@@ -7,18 +7,18 @@ Copyright 2016 - 2016
 import Builder from './Builder.babel.js'
 
   export default class CSSBuilder extends Builder{
-    createAttribute_text(key, attribute) {
+    createAttribute_text(key, attribute,state) {
       if(key=='style'){
          return(`${attribute.data||''}`);
       }
     };
-    createAttribute_script(key, attribute) {
+    createAttribute_script(key, attribute,state) {
       if(key=='style'){
         return(`${attribute.data||''}`);
       }
     };
 
-    createTagElement_open(src, attributes, isContainer) {
+    createTagElement_open(src, attributes, isContainer,state) {
       if(!src.attributes) return;
       var id = '';
       if(src.attributes['id']){
