@@ -12,6 +12,9 @@ import Builder from './Builder.babel.js'
       this.elements = options.elements||{};
       this.attributeDelimiter =",";
     }
+    toUpperFirstLetter(str) {
+        return str.charAt(0).toUpperCase() + str.substring(1).toLowerCase();
+    }
     createAttribute_text(key, attribute,state) {
       return(`${key}:'${attribute.data}'`);
     }
@@ -19,8 +22,8 @@ import Builder from './Builder.babel.js'
       return(`${key}:${attribute.data}`);
     }
     createTagElement_open(src, attributes, isContainer,state) {
-      var tagdelimiter= this.elements[src.name]? "":"'";
-      return(`${Array(state.depth).join('\t')}React.createElement(${tagdelimiter}${src.name}${tagdelimiter},${attributes?'{'+attributes+'}':'null'}${isContainer?',':(state.nodes.length>state.nodes.pos)?'),':')'}`);
+      var tagName= this.elements[src.name]? this.toUpperFirstLetter(src.name):`'${src.name}'`;
+      return(`${Array(state.depth).join('\t')}React.createElement(${tagName},${attributes?'{'+attributes+'}':'null'}${isContainer?',':(state.nodes.length>state.nodes.pos)?'),':')'}`);
     }
     createTagElement_close(src,state) {
       return(`${Array(state.depth).join('\t')})${(state.nodes.length>state.nodes.pos)?',':''}`);
@@ -45,9 +48,9 @@ import Builder from './Builder.babel.js'
     }
     getResult(arg) {
       return(`
-window['${arg.elementName}'] = React.createClass({
+window['${this.toUpperFirstLetter(arg.elementName)}'] = React.createClass({
   render: function() {
-    return ${this.getNodes()}
+    return ${this.getNodes().trim()}
   }
 ${arg.script?','+arg.script.data:''}
 });`);
