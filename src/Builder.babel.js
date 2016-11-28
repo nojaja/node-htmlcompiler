@@ -8,6 +8,7 @@ Copyright 2016 - 2016
       var self = this;
       this._options = options;
       this.nodes = [];
+      this.attributeDelimiter =" ";
     }
     getNodes(arg) {
       return this.nodes.join(arg || '\n');
@@ -15,7 +16,10 @@ Copyright 2016 - 2016
     addNode(node) {
       this.nodes.push(node);
     }
-
+    getResult(arg) {
+      return(`${this.getNodes()}`);
+    }
+    
     beforeCreateAttribute(attributes) {}
     createAttribute_text(key, attribute) {}
     createAttribute_script(key, attribute) {}

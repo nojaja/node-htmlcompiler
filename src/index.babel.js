@@ -11,6 +11,8 @@ import Builder from './Builder.babel.js'
 import HtmlBuilder from './HtmlBuilder.babel.js'
 import CSSBuilder from './CSSBuilder.babel.js'
 import IncrementalDomBuilder from './IncrementalDomBuilder.babel.js'
+import ReactComponentBuilder from './ReactComponentBuilder.babel.js'
+import WebComponentParser from './WebComponentParser.babel.js'
 
 
 window.Builder = Builder;
@@ -18,3 +20,5 @@ window.HtmlBuilder = HtmlBuilder;
 window.CSSBuilder = CSSBuilder;
 window.Compiler = Compiler;
 window.IncrementalDomBuilder = IncrementalDomBuilder;
+window.ReactComponentBuilder = ReactComponentBuilder;
+window.WebComponentParser = WebComponentParser;
