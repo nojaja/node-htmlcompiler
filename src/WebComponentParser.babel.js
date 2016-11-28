@@ -21,18 +21,14 @@ import Builder from './Builder.babel.js'
         var script = customElement.getElementsByTagName("script");
         
         var elementName = customElement.attributes.name[0].data;
-        
-        
         this.elements[elementName] = 
           {
-            template:template[0]?clone(template[0].children):[],
-            script:script[0]?clone(script[0].children):[]
+            template:template[0]?template[0].cloneElement().children:[],
+            script:script[0]?script[0].cloneElement().children:[]
           };
-        this.elements[elementName].template.parentNode=null;
-        this.elements[elementName].script.parentNode=null;
         console.log("element: " , elementName, this.elements[elementName]);
+        //console.log("element: " , elementName, stringify(this.elements[elementName]));
         customElement.parentNode.removeChild(customElement);
-        
         
         var reactComponentBuilder = new this.builder({});
         var _compiler = new Compiler([reactComponentBuilder],{});
@@ -43,4 +39,3 @@ import Builder from './Builder.babel.js'
       },this);
     }
   }
-    
