@@ -13,7 +13,7 @@ import Builder from './Builder.babel.js'
       this.attributeDelimiter =",";
     }
     toUpperFirstLetter(str) {
-        return str.charAt(0).toUpperCase() + str.substring(1).toLowerCase();
+        return str.charAt(0).toUpperCase() + str.substring(1);
     }
     createAttribute_text(key, attribute,state) {
       return(`${key}:'${attribute.data}'`);
@@ -22,7 +22,7 @@ import Builder from './Builder.babel.js'
       return(`${key}:${attribute.data}`);
     }
     createTagElement_open(src, attributes, isContainer,state) {
-      var tagName= this.elements[src.name]? this.toUpperFirstLetter(src.name):`'${src.name}'`;
+      var tagName= this.elements[src.name.toLowerCase()]? this.toUpperFirstLetter(src.name):`'${src.name}'`;
       return(`${Array(state.depth).join('\t')}React.createElement(${tagName},${attributes?'{'+attributes+'}':'null'}${isContainer?',':(state.nodes.length>state.nodes.pos)?'),':')'}`);
     }
     createTagElement_close(src,state) {
