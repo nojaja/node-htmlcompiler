@@ -9,6 +9,7 @@ import Builder from './Builder.babel.js'
     constructor(options) {
       super(options);
       var self = this;
+      this.elements = options.elements||{};
       this.attributeDelimiter =",";
     }
     createAttribute_text(key, attribute,state) {
@@ -18,7 +19,8 @@ import Builder from './Builder.babel.js'
       return(`${key}:${attribute.data}`);
     }
     createTagElement_open(src, attributes, isContainer,state) {
-      return(`${Array(state.depth).join('\t')}React.createElement('${src.name}',${attributes?'{'+attributes+'}':'null'}${isContainer?',':')'}`);
+      var tagdelimiter= this.elements[src.name]? "":"'";
+      return(`${Array(state.depth).join('\t')}React.createElement(${tagdelimiter}${src.name}${tagdelimiter},${attributes?'{'+attributes+'}':'null'}${isContainer?',':(state.nodes.length>state.nodes.pos)?'),':')'}`);
     }
     createTagElement_close(src,state) {
       return(`${Array(state.depth).join('\t')})${(state.nodes.length>state.nodes.pos)?',':''}`);
@@ -43,12 +45,11 @@ import Builder from './Builder.babel.js'
     }
     getResult(arg) {
       return(`
-      window['${arg.elementName}'] = React.createClass({
-        render: function() {
-          return ${this.getNodes()}
-        }
-        ${arg.script?','+arg.script.data:''}
-      });
-        `);
+window['${arg.elementName}'] = React.createClass({
+  render: function() {
+    return ${this.getNodes()}
+  }
+${arg.script?','+arg.script.data:''}
+});`);
     }
   }
