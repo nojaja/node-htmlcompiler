@@ -19,6 +19,7 @@ import Builder from './Builder.babel.js'
       customElements.forEach(function(customElement){   
         var template = customElement.getElementsByTagName("template");
         var script = customElement.getElementsByTagName("script");
+        script = script||customElement.getElementsByTagName("script");
         
         var elementName = customElement.attributes.name[0].data.toLowerCase();
         this.elements[elementName] = 
