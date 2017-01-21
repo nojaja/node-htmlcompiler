@@ -1,5 +1,5 @@
 /***********************************************
-Copyright 2016 - 2016 
+Copyright 2016 - 2017 
 ***********************************************/
 /* v1.0.0 */
 
@@ -16,10 +16,10 @@ import Builder from './Builder.babel.js'
         return str.charAt(0).toUpperCase() + str.substring(1);
     }
     createAttribute_text(key, attribute,state) {
-      return(`${key}:'${attribute.data}'`);
+      return(`'${key}':'${attribute.data}'`);
     }
     createAttribute_script(key, attribute,state) {
-      return(`${key}:${attribute.data}`);
+      return(`'${key}':${attribute.data}`);
     }
     createTagElement_open(src, attributes, isContainer,state) {
       var tagName= this.elements[src.name.toLowerCase()]? this.toUpperFirstLetter(src.name):`'${src.name}'`;
