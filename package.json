@@ -4,6 +4,12 @@
   "description": "",
   "main": "./lib/htmlcompiler.js",
   "dependencies": {
+    "commander": "^2.2.0",
+    "log4js": "^0.6.22",
+    "async": "^0.2.9",
+    "mkdirp": "^0.3.5",
+    "semver": "^4.2.0",
+    "htmlparser" : "git+https://github.com/nojaja/node-htmlparser#v2.1"
   },
   "devDependencies": {
     "babel-cli": "^6.0.0",
@@ -13,8 +19,12 @@
     "babel-plugin-transform-es2015-modules-umd": "^6.18.0"
   },
   "scripts": {
+    "start": "node build.js",
     "babel": "babel src -d lib",
     "build": "browserify src/index.babel.js -t babelify -o lib/htmlcompiler.js"
+  },
+  "bin": {
+    "build": "build.js"
   },
   "repository": {
     "type": "git",

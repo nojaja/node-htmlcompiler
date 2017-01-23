@@ -1,0 +1,102 @@
+<html >
+<head>
+  <meta charset="UTF-8">
+  <title>uikit+WebComponent2React demo</title>
+  
+  
+  <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-beta.5/css/uikit.min.css'>
+
+  
+  
+</head>
+
+<body>
+  <div id="app"></div>
+
+
+<script language='ahtml' id="input">
+<div>
+<element name="App">
+  <template>
+		<div className="uk-section uk-section-default uk-section-small uk-padding-remove-top">
+      <div id='target' className='uk-container'>
+ 
+    		<div className="uk-child-width-1-4@m uk-grid-match" uk-grid="">
+      
+        <Reactcard title='Test' >
+          <Reactinput label='input' ></Reactinput>
+          <Reactlabel label='message' ></Reactlabel>
+          <p>Lorem ipsum <a href="#">dolor</a> sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+          <Reactmargin>
+        		<Reactbutton label='Action1' href='#' ></Reactbutton>
+          </Reactmargin>
+  			</Reactcard>
+  
+        </div>
+      </div>
+    </div>
+  </template>
+</element>
+  
+<element name="Reactlabel">
+  <template>
+      <div>
+  			<span className="uk-label">{this.props.label}</span><label id='caption'>{store.getState().main.message}</label>
+      </div>
+  </template>
+</element>
+     
+<element name="Reactinput">
+  <x-script language='es6'>
+   handleChange:function(e) {
+    TestAction.change(e.target.value);
+  }
+  </x-script>
+  <template>
+    <div>
+ 			<span className="uk-label">{this.props.label}</span>
+      <input id='message' className='uk-input' value={store.getState().main.message} onChange={this.handleChange}  />
+    </div>
+  </template>
+</element>
+  
+<element name="Reactbutton">
+  <template>
+        <a className="uk-button uk-button-default" href="{this.props.href}">{this.props.label}</a>
+  </template>
+</element>
+  
+<element name="Reactmargin">
+  <template>
+        <p uk-margin="">{this.props.children}</p>
+  </template>
+</element>
+  
+<element name="Reactcard">
+  <template>
+  		<div>
+        <div className="uk-card uk-card-primary uk-card-hover">
+          <div className="uk-card-body">
+            <h3 className="uk-card-title">{this.props.title}</h3>
+  					{this.props.children}
+          </div>
+        </div>
+      </div>
+  </template>
+</element>
+  
+</div>
+
+</script>
+<script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-beta.5/js/uikit.min.js'></script>
+<script src='https://fb.me/react-15.1.0.js'></script>
+<script src='https://fb.me/react-dom-15.1.0.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/redux/3.5.2/redux.js'></script>
+<script src='https://rawgit.com/nojaja/node-htmlparser/v2.1/lib/htmlparser.js'></script>
+<script src='https://rawgit.com/nojaja/node-htmlcompiler/v1.0.1/lib/htmlcompiler.js'></script>
+
+    <script src="js/index.js"></script>
+
+</body>
+</html>
