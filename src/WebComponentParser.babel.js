@@ -6,14 +6,23 @@ Copyright 2016 - 2016
 import Builder from './Builder.babel.js'
 
   export default class WebComponentParser extends Builder{
+    /**コンストラクタ
+       new WebComponentParser({ builder: ReactComponentBuilder });
+       
+    **/
     constructor(options) {
       super(options);
       var self = this;
-      this.builder =options.builder;
+      this.builder =options.builder;//webComponentのbuildに利用するビルダーを定義します。
       this.elements ={};
       this.components ={};
     }
-    //webComponentを取得
+
+    /**
+       beforeCompile
+       各Builderを呼び出す前に1回だけ実行されます。
+       このタイミングでhtml内のwebComponent定義を取得して利用可能な形式に変換します。
+    **/
     beforeCompile(src){
       var customElements = src.getElementsByTagName("element");
       customElements.forEach(function(customElement){   
@@ -33,7 +42,14 @@ import Builder from './Builder.babel.js'
   
       },this);
     }
-    //webComponentをbuild
+
+
+    /**
+       build
+       webComponentをbuildします。
+       コンストラクタで指定したBuilderを実行します。
+       
+    **/
     build(){
       //console.log("build: ",this.elements);
       for (var elementName in this.elements) {
@@ -45,6 +61,10 @@ import Builder from './Builder.babel.js'
         this.components[elementName]=reactComponentBuilder.getResult({'elementName':elementName,'script':this.elements[elementName].script[0]});
       };
     }
+    /**
+       getResult
+       生成結果返却メソッド
+     **/
     getResult(arg) {
       var result = [];
       for (var elementName in this.components) {
