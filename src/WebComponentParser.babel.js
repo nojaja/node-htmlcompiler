@@ -27,7 +27,7 @@ import Builder from './Builder.babel.js'
             template:template[0]?template[0].cloneElement().children:[],
             script:script[0]?script[0].cloneElement().children:[]
           };
-        console.log("element: " , elementName, this.elements[elementName]);
+        //console.log("element: " , elementName, this.elements[elementName]);
         //console.log("element: " , elementName, stringify(this.elements[elementName]));
         customElement.parentNode.removeChild(customElement);
   
@@ -35,9 +35,9 @@ import Builder from './Builder.babel.js'
     }
     //webComponent‚ðbuild
     build(){
-      console.log("build: ",this.elements);
+      //console.log("build: ",this.elements);
       for (var elementName in this.elements) {
-        console.log("build element: " , elementName, this.elements[elementName]);
+        //console.log("build element: " , elementName, this.elements[elementName]);
 
         var reactComponentBuilder = new this.builder({elements:this.elements});
         var _compiler = new Compiler([reactComponentBuilder],{});
