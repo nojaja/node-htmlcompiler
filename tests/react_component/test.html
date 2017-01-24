@@ -1,0 +1,49 @@
+<html >
+<element name="Reactlabel">
+  <template>
+      <div>
+          <span className="uk-label">{this.props.label}</span><label id='caption'>{store.getState().main.message}</label>
+      </div>
+  </template>
+</element>
+     
+<element name="Reactinput">
+  <script language='es6'>
+   handleChange:function(e) {
+    TestAction.change(e.target.value);
+  }
+  </script>
+  <template>
+    <div>
+      <span className="uk-label">{this.props.label}</span>
+      <input id='message' className='uk-input' value={store.getState().main.message} onChange={this.handleChange}  />
+    </div>
+  </template>
+</element>
+  
+<element name="Reactbutton">
+  <template>
+        <a className="uk-button uk-button-default" href="{this.props.href}">{this.props.label}</a>
+  </template>
+</element>
+  
+<element name="Reactmargin">
+  <template>
+        <p uk-margin="">{this.props.children}</p>
+  </template>
+</element>
+  
+<element name="Reactcard">
+  <template>
+      <div>
+          <div className="uk-card uk-card-primary uk-card-hover">
+              <div className="uk-card-body">
+                  <h3 className="uk-card-title">{this.props.title}</h3>
+                  {this.props.children}
+              </div>
+          </div>
+      </div>
+  </template>
+</element>
+ 
+</html>
