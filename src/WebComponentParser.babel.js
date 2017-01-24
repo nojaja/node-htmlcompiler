@@ -14,6 +14,7 @@ import Builder from './Builder.babel.js'
       super(options);
       var self = this;
       this.builder =options.builder;//webComponentのbuildに利用するビルダーを定義します。
+      this.elementNames =[];
       this.elements ={};
       this.components ={};
     }
@@ -31,6 +32,7 @@ import Builder from './Builder.babel.js'
         script = script.concat(customElement.getElementsByTagName("x-script"));
         
         var elementName = customElement.attributes.name[0].data.toLowerCase();
+        this.elementNames.push(elementName);
         this.elements[elementName] = 
           {
             template:template[0]?template[0].cloneElement().children:[],
@@ -55,10 +57,11 @@ import Builder from './Builder.babel.js'
       for (var elementName in this.elements) {
         //console.log("build element: " , elementName, this.elements[elementName]);
 
-        var reactComponentBuilder = new this.builder({elements:this.elements});
+        var reactComponentBuilder = new this.builder({elements:this.elements,elementNames:this.elementNames});
         var _compiler = new Compiler([reactComponentBuilder],{});
         var compileData =_compiler.compile(this.elements[elementName].template[0]);
         this.components[elementName]=reactComponentBuilder.getResult({'elementName':elementName,'script':this.elements[elementName].script[0]});
+        console.log("this.components[elementName]:"+this.components[elementName]);
       };
     }
     /**

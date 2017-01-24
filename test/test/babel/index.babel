@@ -1,0 +1,137 @@
+'use strict';
+//htmlparser///////////////////////////////////////////////////
+var htmlparser = Tautologistics.NodeHtmlParser;
+var parseHtml = function(rawHtml) {
+var handler = new htmlparser.HtmlBuilder(function(err, dom) {
+    if (err) {
+      console.error(err);
+    } else {}
+  }, {
+    enforceEmptyTags: true,
+    caseSensitiveTags:true,
+    caseSensitiveAttr:true,
+    ignoreWhitespace: true,
+    verbose: true,
+    includeLocation:true
+  });
+  var parser = new htmlparser.Parser(handler, {
+    includeLocation: true
+  });
+  parser.parseComplete(rawHtml);
+  if (handler.dom.length > 1) {
+    throw Error('Template must have exactly one root element. was: ' + rawHtml);
+  }
+  // parseしたオブジェクトを返却
+  return handler.dom[0];
+};
+
+var webComponentParser = new WebComponentParser({builder:ReactComponentBuilder});
+var builder = new HtmlBuilder({});
+var cssbuilder = new CSSBuilder({});
+var compiler = new Compiler([webComponentParser,cssbuilder,builder],{});
+
+
+//-ここからDemo用処理----------------------------------
+var element = document.getElementById("input");
+//var rawHtml = element.innerText;
+var rawHtml = element.innerHTML.trim();
+var parseData =parseHtml(rawHtml);//htmlをparseしてjsonオブジェクトにします。
+
+//console.log('element',element);
+//console.log('rawHtml',rawHtml);
+//console.log('test',stringify(parseData));
+
+var compileData =compiler.compile(parseData);//jsonオブジェクトを各種コードに変換します
+//document.getElementById("output2").innerText = builder.getNodes();
+//document.getElementById("output3").innerText = cssbuilder.getNodes();
+
+webComponentParser.build();//react化処理の実行
+//変換されたコードはwindowに読み込まれ実行可能になります。
+
+//生成したreactのsource
+console.log(webComponentParser.getResult());
+
+
+//var code = document.createElement("code");
+//code.innerHTML=stringify(parseData);
+//document.getElementById("output").appendChild(code);
+
+
+//Reducer
+function mainReducer(state = {"message":"hello"}, action) {
+  switch (action.type) {
+    case 'CHANGE':
+      console.log(action.text);
+      state.message =action.text; 
+      return state;
+    case 'INIT':
+      console.log(state);
+      return state;
+    default:
+      return state;
+  }
+}
+
+//store 
+var apps = Redux.combineReducers({
+  main: mainReducer
+});
+
+// ページが読み込まれたら、ローカルストレージから状態を読み込む
+var defaultState = JSON.parse(localStorage.getItem('state')) || {"message":"hello"};
+console.log("defaultState:" + JSON.stringify(defaultState));
+var store = Redux.createStore(apps, defaultState);
+//var store = Redux.createStore(apps);
+
+/* Action + action creators */
+var TestAction = {//action creators
+  init: function(){
+    store.dispatch({
+      type: 'INIT'
+    }); 
+  },
+  change: function (value) {
+    console.log(value);
+    store.dispatch({
+      type: 'CHANGE',
+      text: value
+    }); //action creators
+  }
+};
+
+function localStorageRender() {
+  // ローカルストレージに最新の状態を保存
+  localStorage.setItem('state', JSON.stringify(store.getState()));
+  //console.log("defaultState:" + JSON.stringify(store.getState()));
+}
+
+/* View */
+Function(webComponentParser.getResult())();
+
+var render = function() {
+  ReactDOM.render(<App />,
+    document.getElementById('app'));
+}
+
+store.subscribe(localStorageRender);
+store.subscribe(render);
+
+/* render initial component */
+render();
+
+
+function stringify(str){
+  var cache = [];
+  return JSON.stringify(str, function(key, value) {
+        if (typeof value === 'object' && value !== null) {
+            if (cache.indexOf(value) !== -1) {
+                // Circular reference found, discard key
+                return;
+            }
+            // Store value in our collection
+            cache.push(value);
+        }
+        if(key=='parentNode')return;
+        return value;
+    }, "\t");
+}

@@ -108,9 +108,14 @@
 				//生成したreactの
 				var source =webComponentParser.getResult(); 
 				console.log(source);
-				var outputFile= path.join(output,path.basename(filename, path.extname(filename))+'.js');
-				console.log("outputFile:"+outputFile);
-				fs.writeFile(outputFile, source);
+				var outputFile1= path.join(output,path.basename(filename, path.extname(filename))+'.js');
+				var outputFile2= path.join(output,path.basename(filename, path.extname(filename))+'.json');
+				
+				
+				console.log("outputFile:"+outputFile1);
+				console.log("elementNames:"+webComponentParser.elementNames);
+				fs.writeFile(outputFile1, source);
+				fs.writeFile(outputFile2, JSON.stringify(webComponentParser.elementNames));
 		});
 		
 	}

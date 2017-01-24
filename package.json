@@ -24,7 +24,7 @@
     "build": "browserify src/index.babel.js -t babelify -o lib/htmlcompiler.js"
   },
   "bin": {
-    "build": "build.js"
+    "htmlcompiler": "build.js"
   },
   "repository": {
     "type": "git",
