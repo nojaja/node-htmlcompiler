@@ -8,19 +8,19 @@ import Builder from './Builder.babel.js'
 
 /*------------------------------------------------
 CSSBuilder
-html‚Éw’è‚³‚ê‚½style‚ğCSS‚É•ª—£‚µ‚Ü‚·B
+htmlã«æŒ‡å®šã•ã‚ŒãŸstyleã‚’CSSã«åˆ†é›¢ã—ã¾ã™ã€‚
 ------------------------------------------------*/
   export default class CSSBuilder extends Builder{
 
     /**
        createAttribute_text
-       ‘®«ƒm[ƒh‚ÅŒÄ‚Î‚ê‚Ü‚·
-       ‚±‚ÌBuilder‚Å‚Ístyle‘®«‚Ìê‡‚Í’l‚ğ•Ô‚µ‚Ü‚·
+       å±æ€§ãƒãƒ¼ãƒ‰ã§å‘¼ã°ã‚Œã¾ã™
+       ã“ã®Builderã§ã¯styleå±æ€§ã®å ´åˆã¯å€¤ã‚’è¿”ã—ã¾ã™
        
     **/
     createAttribute_text(key, attribute,state) {
       if(key=='style'){
-         return(`${attribute.data||''}`); //CSS‚Ì—v‘f@—á:height:30px;
+         return(`${attribute.data||''}`); //CSSã®è¦ç´ ã€€ä¾‹:height:30px;
       }
     };
     createAttribute_script(key, attribute,state) {
@@ -31,17 +31,17 @@ html‚Éw’è‚³‚ê‚½style‚ğCSS‚É•ª—£‚µ‚Ü‚·B
 
     /**
        createTagElement_open
-       ƒ^ƒOŠJn‚Ìƒm[ƒh‚ÅŒÄ‚Î‚ê‚Ü‚·
-       src:{name:ƒ^ƒO–¼AattributesFƒm[ƒh‚ÉŠÜ‚Ü‚ê‚é‘®«iMAPj}
-       attributes:ƒm[ƒh‚ÉŠÜ‚Ü‚ê‚é‘®«‚ª“ü‚Á‚Ä‚Ü‚·
-       isContainer:q—v‘f‚ğŠÜ‚Şê‡‚Ítrue‚É‚È‚è‚Ü‚·B
-       state:{depth:ƒCƒ“ƒfƒ“ƒg”}
+       ã‚¿ã‚°é–‹å§‹ã®ãƒãƒ¼ãƒ‰ã§å‘¼ã°ã‚Œã¾ã™
+       src:{name:ã‚¿ã‚°åã€attributesï¼šãƒãƒ¼ãƒ‰ã«å«ã¾ã‚Œã‚‹å±æ€§ï¼ˆMAPï¼‰}
+       attributes:ãƒãƒ¼ãƒ‰ã«å«ã¾ã‚Œã‚‹å±æ€§ãŒå…¥ã£ã¦ã¾ã™
+       isContainer:å­è¦ç´ ã‚’å«ã‚€å ´åˆã¯trueã«ãªã‚Šã¾ã™ã€‚
+       state:{depth:ã‚¤ãƒ³ãƒ‡ãƒ³ãƒˆæ•°}
        
     **/
     createTagElement_open(src, attributes, isContainer,state) {
       if(!src.attributes) return;
       var id = '';
-      if(src.attributes['id']){ //idw’è‚ª‚ ‚éê‡‚Ì‚İCSS‰»‚µ‚Ü‚·B
+      if(src.attributes['id']){ //idæŒ‡å®šãŒã‚ã‚‹å ´åˆã®ã¿CSSåŒ–ã—ã¾ã™ã€‚
         src.attributes['id'].forEach(function(_src) {
             if(_src.type=='text') id = `${id}${_src.data}`;
             if(_src.type=='script' && _src.langName== 'singleMustache' ) id = `${id}{${_src.data}}`;

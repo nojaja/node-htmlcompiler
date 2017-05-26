@@ -4,16 +4,16 @@ Copyright 2016 - 2016
 /* v1.0.0 */
 
 /*------------------------------------------------
-Builder‚Ìƒx[ƒXƒNƒ‰ƒX 
+Builderã®ãƒ™ãƒ¼ã‚¹ã‚¯ãƒ©ã‚¹ 
 ------------------------------------------------*/
   export default class Builder {
     
-    /**ƒRƒ“ƒXƒgƒ‰ƒNƒ^**/
+    /**ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿**/
     constructor(options) {
       var self = this;
-      this._options = options;//¶¬ƒIƒvƒVƒ‡ƒ“
-      this.nodes = [];//¶¬•¨Ši”[ƒtƒB[ƒ‹ƒh
-      this.attributeDelimiter =" ";//Šeƒm[ƒhŠÔ‚Ì‹æØ‚è•¶š
+      this._options = options;//ç”Ÿæˆã‚ªãƒ—ã‚·ãƒ§ãƒ³
+      this.nodes = [];//ç”Ÿæˆç‰©æ ¼ç´ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰
+      this.attributeDelimiter =" ";//å„ãƒãƒ¼ãƒ‰é–“ã®åŒºåˆ‡ã‚Šæ–‡å­—
     }
     getNodes(arg) {
       return this.nodes.join(arg || '\n');
@@ -23,8 +23,8 @@ Builder‚Ìƒx[ƒXƒNƒ‰ƒX
     }
     /**
        getResult
-       ¶¬Œ‹‰Ê•Ô‹pƒƒ\ƒbƒh
-       ¶¬Œ‹‰Ê‚ğƒ‰ƒbƒv‚·‚é‚È‚Ç‚Ì‰Â”\‚ª•K—v‚Èê‡‚ÍƒRƒR‚É‹LÚ‹LÚ‚·‚é
+       ç”Ÿæˆçµæœè¿”å´ãƒ¡ã‚½ãƒƒãƒ‰
+       ç”Ÿæˆçµæœã‚’ãƒ©ãƒƒãƒ—ã™ã‚‹ãªã©ã®å¯èƒ½ãŒå¿…è¦ãªå ´åˆã¯ã‚³ã‚³ã«è¨˜è¼‰è¨˜è¼‰ã™ã‚‹
      **/
     getResult(arg) {
       return(`${this.getNodes()}`);
@@ -32,27 +32,27 @@ Builder‚Ìƒx[ƒXƒNƒ‰ƒX
     
     /**
        beforeCreateAttribute
-       ‘®«ƒm[ƒh‚ÅŠeBuilder‚ğŒÄ‚Ño‚·‘O‚É1‰ñ‚¾‚¯Às‚³‚ê‚Ü‚·B
-       “Á’è‚Ì‘®«‚ğ‘‚«Š·‚¦‚é‚Æ‚¢‚Á‚½ƒP[ƒX‚Å—˜—p‚µ‚Ä‚­‚¾‚³‚¢
+       å±æ€§ãƒãƒ¼ãƒ‰ã§å„Builderã‚’å‘¼ã³å‡ºã™å‰ã«1å›ã ã‘å®Ÿè¡Œã•ã‚Œã¾ã™ã€‚
+       ç‰¹å®šã®å±æ€§ã‚’æ›¸ãæ›ãˆã‚‹ã¨ã„ã£ãŸã‚±ãƒ¼ã‚¹ã§åˆ©ç”¨ã—ã¦ãã ã•ã„
        
     **/
     beforeCreateAttribute(attributes) {}
 
     /**
        createAttribute_text
-       ‘®«ƒm[ƒh‚ÅŒÄ‚Î‚ê‚Ü‚·
-       key:‘®«–¼
-       attribute:ƒm[ƒh
+       å±æ€§ãƒãƒ¼ãƒ‰ã§å‘¼ã°ã‚Œã¾ã™
+       key:å±æ€§å
+       attribute:ãƒãƒ¼ãƒ‰
        
     **/
     createAttribute_text(key, attribute) {}
 
     /**
        createAttribute_script
-       Scriptƒ^ƒCƒv‚Ì‘®«ƒm[ƒh‚ÅŒÄ‚Î‚ê‚Ü‚·
-       attribute‚ªScriptƒ^ƒCƒv‚Ìê‡‚ÉŒÄ‚Ño‚³‚ê‚Ü‚·
-       key:‘®«–¼
-       attribute:ƒm[ƒh
+       Scriptã‚¿ã‚¤ãƒ—ã®å±æ€§ãƒãƒ¼ãƒ‰ã§å‘¼ã°ã‚Œã¾ã™
+       attributeãŒScriptã‚¿ã‚¤ãƒ—ã®å ´åˆã«å‘¼ã³å‡ºã•ã‚Œã¾ã™
+       key:å±æ€§å
+       attribute:ãƒãƒ¼ãƒ‰
        
     **/
     createAttribute_script(key, attribute) {}
@@ -61,20 +61,20 @@ Builder‚Ìƒx[ƒXƒNƒ‰ƒX
 
     /**
        createTagElement_open
-       ƒ^ƒOŠJn‚Ìƒm[ƒh‚ÅŒÄ‚Î‚ê‚Ü‚·
-       src:{name:ƒ^ƒO–¼AattributesFƒm[ƒh‚ÉŠÜ‚Ü‚ê‚é‘®«iMAPj}
-       attributes:ƒm[ƒh‚ÉŠÜ‚Ü‚ê‚é‘®«‚ª“ü‚Á‚Ä‚Ü‚·
-       isContainer:q—v‘f‚ğŠÜ‚Şê‡‚Ítrue‚É‚È‚è‚Ü‚·B
-       state:{depth:ƒCƒ“ƒfƒ“ƒg”}
+       ã‚¿ã‚°é–‹å§‹ã®ãƒãƒ¼ãƒ‰ã§å‘¼ã°ã‚Œã¾ã™
+       src:{name:ã‚¿ã‚°åã€attributesï¼šãƒãƒ¼ãƒ‰ã«å«ã¾ã‚Œã‚‹å±æ€§ï¼ˆMAPï¼‰}
+       attributes:ãƒãƒ¼ãƒ‰ã«å«ã¾ã‚Œã‚‹å±æ€§ãŒå…¥ã£ã¦ã¾ã™
+       isContainer:å­è¦ç´ ã‚’å«ã‚€å ´åˆã¯trueã«ãªã‚Šã¾ã™ã€‚
+       state:{depth:ã‚¤ãƒ³ãƒ‡ãƒ³ãƒˆæ•°}
        
     **/
     createTagElement_open(src, attributes, isContainer,state) {}
 
     /**
        createTagElement_close
-       ƒ^ƒOI—¹‚Ìƒm[ƒh‚ÅŒÄ‚Î‚ê‚Ü‚·
-       src:{name:ƒ^ƒO–¼}
-       state:{depth:ƒCƒ“ƒfƒ“ƒg”}
+       ã‚¿ã‚°çµ‚äº†ã®ãƒãƒ¼ãƒ‰ã§å‘¼ã°ã‚Œã¾ã™
+       src:{name:ã‚¿ã‚°å}
+       state:{depth:ã‚¤ãƒ³ãƒ‡ãƒ³ãƒˆæ•°}
        
     **/
     createTagElement_close(src,state) {}
@@ -83,9 +83,9 @@ Builder‚Ìƒx[ƒXƒNƒ‰ƒX
 
     /**
        createTextElement
-       ƒeƒLƒXƒgƒ^ƒCƒv‚Ì––’[ƒm[ƒh‚ÅŒÄ‚Î‚ê‚Ü‚·
-       src:{data:ƒeƒLƒXƒg}
-       state:{depth:ƒCƒ“ƒfƒ“ƒg”}
+       ãƒ†ã‚­ã‚¹ãƒˆã‚¿ã‚¤ãƒ—ã®æœ«ç«¯ãƒãƒ¼ãƒ‰ã§å‘¼ã°ã‚Œã¾ã™
+       src:{data:ãƒ†ã‚­ã‚¹ãƒˆ}
+       state:{depth:ã‚¤ãƒ³ãƒ‡ãƒ³ãƒˆæ•°}
        
     **/
     createTextElement(src,state) {}
@@ -97,8 +97,8 @@ Builder‚Ìƒx[ƒXƒNƒ‰ƒX
 
     /**
        beforeCompile
-       ŠeBuilder‚ğŒÄ‚Ño‚·‘O‚É1‰ñ‚¾‚¯Às‚³‚ê‚Ü‚·B
-       “Á’è‚Ìƒm[ƒh‚ğ‘‚«Š·‚¦‚é‚Æ‚¢‚Á‚½ƒP[ƒX‚Å—˜—p‚µ‚Ä‚­‚¾‚³‚¢
+       å„Builderã‚’å‘¼ã³å‡ºã™å‰ã«1å›ã ã‘å®Ÿè¡Œã•ã‚Œã¾ã™ã€‚
+       ç‰¹å®šã®ãƒãƒ¼ãƒ‰ã‚’æ›¸ãæ›ãˆã‚‹ã¨ã„ã£ãŸã‚±ãƒ¼ã‚¹ã§åˆ©ç”¨ã—ã¦ãã ã•ã„
        
     **/
     beforeCompile(src) {}

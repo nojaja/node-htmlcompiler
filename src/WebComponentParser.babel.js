@@ -6,14 +6,14 @@ Copyright 2016 - 2016
 import Builder from './Builder.babel.js'
 
   export default class WebComponentParser extends Builder{
-    /**ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+    /**ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
        new WebComponentParser({ builder: ReactComponentBuilder });
        
     **/
     constructor(options) {
       super(options);
       var self = this;
-      this.builder =options.builder;//webComponent‚Ìbuild‚É—˜—p‚·‚éƒrƒ‹ƒ_[‚ð’è‹`‚µ‚Ü‚·B
+      this.builder =options.builder;//webComponentã®buildã«åˆ©ç”¨ã™ã‚‹ãƒ“ãƒ«ãƒ€ãƒ¼ã‚’å®šç¾©ã—ã¾ã™ã€‚
       this.elementNames =[];
       this.elements ={};
       this.components ={};
@@ -21,8 +21,8 @@ import Builder from './Builder.babel.js'
 
     /**
        beforeCompile
-       ŠeBuilder‚ðŒÄ‚Ño‚·‘O‚É1‰ñ‚¾‚¯ŽÀs‚³‚ê‚Ü‚·B
-       ‚±‚Ìƒ^ƒCƒ~ƒ“ƒO‚Åhtml“à‚ÌwebComponent’è‹`‚ðŽæ“¾‚µ‚Ä—˜—p‰Â”\‚ÈŒ`Ž®‚É•ÏŠ·‚µ‚Ü‚·B
+       å„Builderã‚’å‘¼ã³å‡ºã™å‰ã«1å›žã ã‘å®Ÿè¡Œã•ã‚Œã¾ã™ã€‚
+       ã“ã®ã‚¿ã‚¤ãƒŸãƒ³ã‚°ã§htmlå†…ã®webComponentå®šç¾©ã‚’å–å¾—ã—ã¦åˆ©ç”¨å¯èƒ½ãªå½¢å¼ã«å¤‰æ›ã—ã¾ã™ã€‚
     **/
     beforeCompile(src){
       var customElements = src.getElementsByTagName("element");
@@ -48,8 +48,8 @@ import Builder from './Builder.babel.js'
 
     /**
        build
-       webComponent‚ðbuild‚µ‚Ü‚·B
-       ƒRƒ“ƒXƒgƒ‰ƒNƒ^‚ÅŽw’è‚µ‚½Builder‚ðŽÀs‚µ‚Ü‚·B
+       webComponentã‚’buildã—ã¾ã™ã€‚
+       ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿ã§æŒ‡å®šã—ãŸBuilderã‚’å®Ÿè¡Œã—ã¾ã™ã€‚
        
     **/
     build(){
@@ -66,7 +66,7 @@ import Builder from './Builder.babel.js'
     }
     /**
        getResult
-       ¶¬Œ‹‰Ê•Ô‹pƒƒ\ƒbƒh
+       ç”Ÿæˆçµæžœè¿”å´ãƒ¡ã‚½ãƒƒãƒ‰
      **/
     getResult(arg) {
       var result = [];

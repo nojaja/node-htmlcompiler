@@ -6,11 +6,12 @@ Copyright 2016 - 2017
 import Builder from './Builder.babel.js'
 
   export default class ReactComponentBuilder extends Builder{
+    /**コンストラクタ **/
     constructor(options) {
       super(options);
       var self = this;
       this.elements = options.elements||{};
-      this.elementNames = options.elementNames||[];
+      this.elementNames = options.elementNames||[];//webcomponentの一覧
       this.attributeDelimiter =",";
     }
     toUpperFirstLetter(str) {
@@ -23,8 +24,13 @@ import Builder from './Builder.babel.js'
       return(`'${key}':${attribute.data}`);
     }
     createTagElement_open(src, attributes, isContainer,state) {
-      //var tagName= this.elements[src.name.toLowerCase()]? this.toUpperFirstLetter(src.name):`'${src.name}'`;
-      var tagName= (this.elementNames.indexOf(src.name.toLowerCase()) >= 0)? this.toUpperFirstLetter(src.name):`'${src.name}'`;
+      //tagかwebcomponentか判断する
+      // Judge whether it is tag or webcomponent
+      //タグ名にハイフンが含まれていたらwebcomponent
+      // webcomponent if the tag name contains a '-'
+      //elementNamesに登録されていたらwebcomponent
+      // webcomponent if registered in elementNames
+      var tagName= ( ~src.name.indexOf('-') || this.elementNames.indexOf(src.name.toLowerCase()) >= 0)? this.toUpperFirstLetter(src.name):`'${src.name}'`;
       return(`${Array(state.depth).join('\t')}React.createElement(${tagName},${attributes?'{'+attributes+'}':'null'}${isContainer?',':(state.nodes.length>state.nodes.pos)?'),':')'}`);
     }
     createTagElement_close(src,state) {
@@ -49,6 +55,8 @@ import Builder from './Builder.babel.js'
       return(`${Array(state.depth).join('\t')}});`);
     }
     getResult(arg) {
+      //windowオブジェクトにメソッドを追加するコードを生成
+      //Generate code to add a method to the window object
       return(`
 window['${this.toUpperFirstLetter(arg.elementName)}'] = React.createClass({
   render: function() {
