@@ -1,5 +1,5 @@
 /***********************************************
-Copyright 2016 - 2016 
+Copyright 2016 - 2016
 ***********************************************/
 /* v1.0.0 */
 
@@ -7,8 +7,9 @@ import Builder from './Builder.babel.js'
 
   export default class WebComponentParser extends Builder{
     /**コンストラクタ
+      例：
        new WebComponentParser({ builder: ReactComponentBuilder });
-       
+
     **/
     constructor(options) {
       super(options);
@@ -26,14 +27,14 @@ import Builder from './Builder.babel.js'
     **/
     beforeCompile(src){
       var customElements = src.getElementsByTagName("element");
-      customElements.forEach(function(customElement){   
+      customElements.forEach(function(customElement){
         var template = customElement.getElementsByTagName("template");
         var script = customElement.getElementsByTagName("script");
         script = script.concat(customElement.getElementsByTagName("x-script"));
-        
+
         var elementName = customElement.attributes.name[0].data.toLowerCase();
         this.elementNames.push(elementName);
-        this.elements[elementName] = 
+        this.elements[elementName] =
           {
             template:template[0]?template[0].cloneElement().children:[],
             script:script[0]?script[0].cloneElement().children:[]
@@ -41,7 +42,7 @@ import Builder from './Builder.babel.js'
         //console.log("element: " , elementName, this.elements[elementName]);
         //console.log("element: " , elementName, stringify(this.elements[elementName]));
         customElement.parentNode.removeChild(customElement);
-  
+
       },this);
     }
 
@@ -50,7 +51,7 @@ import Builder from './Builder.babel.js'
        build
        webComponentをbuildします。
        コンストラクタで指定したBuilderを実行します。
-       
+
     **/
     build(){
       //console.log("build: ",this.elements);
