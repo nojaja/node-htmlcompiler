@@ -14,6 +14,8 @@ import CSSBuilder from './CSSBuilder.babel.js'
 import IncrementalDomBuilder from './IncrementalDomBuilder.babel.js'
 import ReactComponentBuilder from './ReactComponentBuilder.babel.js'
 import WebComponentParser from './WebComponentParser.babel.js'
+import ReactRootComponentBuilder from './ReactRootComponentBuilder.babel.js'
+
 
 if (typeof window === 'undefined') {
 global.Builder = Builder;
@@ -24,6 +26,7 @@ global.Compiler = Compiler;
 global.IncrementalDomBuilder = IncrementalDomBuilder;
 global.ReactComponentBuilder = ReactComponentBuilder;
 global.WebComponentParser = WebComponentParser;
+global.ReactRootComponentBuilder = ReactRootComponentBuilder;
 }else{
 window.Builder = Builder;
 window.DebugBuilder = DebugBuilder;
@@ -33,4 +36,5 @@ window.Compiler = Compiler;
 window.IncrementalDomBuilder = IncrementalDomBuilder;
 window.ReactComponentBuilder = ReactComponentBuilder;
 window.WebComponentParser = WebComponentParser;
+window.ReactRootComponentBuilder = ReactRootComponentBuilder;
 }
