@@ -1,5 +1,5 @@
 /***********************************************
-Copyright 2016 - 2017 
+Copyright 2016 - 2017
 ***********************************************/
 /* v1.0.0 */
 
@@ -15,7 +15,9 @@ import Builder from './Builder.babel.js'
       this.attributeDelimiter =",";
     }
     toUpperFirstLetter(str) {
-        return str.charAt(0).toUpperCase() + str.substring(1);
+      return str.split('-').map(function(block){
+        return block.charAt(0).toUpperCase() + block.substring(1);
+      }).join('');
     }
     createAttribute_text(key, attribute,state) {
       return(`'${key}':'${attribute.data}'`);
@@ -28,9 +30,10 @@ import Builder from './Builder.babel.js'
       // Judge whether it is tag or webcomponent
       //タグ名にハイフンが含まれていたらwebcomponent
       // webcomponent if the tag name contains a '-'
+      //タグ名の1文字目が大文字ならwebcomponent
       //elementNamesに登録されていたらwebcomponent
       // webcomponent if registered in elementNames
-      var tagName= ( ~src.name.indexOf('-') || this.elementNames.indexOf(src.name.toLowerCase()) >= 0)? this.toUpperFirstLetter(src.name):`'${src.name}'`;
+      var tagName= ( ~src.name.indexOf('-') || src.name.charAt(0)==src.name.charAt(0).toUpperCase() || this.elementNames.indexOf(src.name.toLowerCase()) >= 0)? this.toUpperFirstLetter(src.name):`'${src.name}'`;
       return(`${Array(state.depth).join('\t')}React.createElement(${tagName},${attributes?'{'+attributes+'}':'null'}${isContainer?',':(state.nodes.length>state.nodes.pos)?'),':')'}`);
     }
     createTagElement_close(src,state) {
@@ -41,7 +44,7 @@ import Builder from './Builder.babel.js'
     }
     createCommentElement(src,state) {
       return(`${Array(state.depth).join('\t')}/* ${src.data.replace(/\n/g,"").replace(/\'/g,"\\\'")} */`);
-    }  
+    }
     createScriptElement_open(src, isContainer,state) {
       if (src.name == 'if') {
         return(`${Array(state.depth).join('\t')}if( ${src.data}){ `);
