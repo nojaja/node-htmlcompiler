@@ -1,5 +1,5 @@
 /***********************************************
-Copyright 2016 - 2016 
+Copyright 2016 - 2016
 ***********************************************/
 /* v1.0.0 */
 
@@ -13,7 +13,10 @@ import Builder from './Builder.babel.js'
         return(`${key}='{${attribute.data||''}}'`);
       }
       createTagElement_open(src, attributes, isContainer,state) {
-        return(`${Array(state.depth).join('\t')}<${src.name}${attributes} ${isContainer?'':'/'}>`);
+        if(src.name=='script'){
+          return(`${Array(state.depth).join('\t')}<${src.name}${attributes}>${isContainer?'':'</'+src.name+'>'}`);
+        }
+        return(`${Array(state.depth).join('\t')}<${src.name}${attributes}${isContainer?'':' /'}>`);
       }
       createTagElement_close(src,state) {
         return(`${Array(state.depth).join('\t')}</${src.name}>`);
