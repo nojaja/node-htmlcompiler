@@ -36,13 +36,9 @@ import Builder from './Builder.babel.js'
            script:[]
          };
        //body配下の削除
-       if(customElement.children)
-       customElement.children.forEach(function(childElement){
-         customElement.removeChild(childElement);
-       });
+       customElement.removeChildAll();
        //body配下に追加
-       var newElement = customElement.createElement('tag');
-       newElement.name = 'div';
+       var newElement = customElement.createElement('div');
        newElement.attributes = {'id':[{
                              "type": "text",
                              "data": "app"
