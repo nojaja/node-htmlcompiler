@@ -11,8 +11,12 @@ Copyright 2016 - 2016
       }
       //**Public**//
     createAttribute(attributes,_builder) {
-      var node = [];
+      var ret = [];
       Object.keys(attributes).forEach(function(attrkey) {
+        //if(attributes[attrkey].length==0){
+        //  node.push(_builder.createAttribute_keyonly(attrkey));
+        //} else
+        var node = [];
         attributes[attrkey].forEach(function(attribute) {
           if(attribute.type == 'script') {
               node.push(_builder.createAttribute_script(attrkey, attribute));
@@ -20,8 +24,9 @@ Copyright 2016 - 2016
               node.push(_builder.createAttribute_text(attrkey, attribute));
           }
         }, this);
+        ret.push(_builder.createAttribute(attrkey,node));
       }, this);
-      return node.join(_builder.attributeDelimiter?_builder.attributeDelimiter:' ');
+      return ret.join(_builder.attributeDelimiter?_builder.attributeDelimiter:' ');
     }
 
     createTagElement(src,state) {
@@ -110,7 +115,6 @@ Copyright 2016 - 2016
       var state = {nodes:{length:1,pos:1},depth:0};
       if(src instanceof Array){
         src.forEach(function(src) {
-          console.log("forEach",src);
           return this.createNodes(src,state);
         }, this);
       }else{

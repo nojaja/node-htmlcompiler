@@ -19,11 +19,16 @@ import Builder from './Builder.babel.js'
         return block.charAt(0).toUpperCase() + block.substring(1);
       }).join('');
     }
+    createAttribute(key,attributes) {
+      if(attributes.length==0) return(`'${key}':true`);
+      return(`'${key}':${attributes.join('+')}`);
+    }
     createAttribute_text(key, attribute,state) {
-      return(`'${key}':'${attribute.data}'`);
+      key=(key=="class")?"className":key;
+      return(`'${attribute.data}'`);
     }
     createAttribute_script(key, attribute,state) {
-      return(`'${key}':${attribute.data}`);
+      return(`${attribute.data}`);
     }
     createTagElement_open(src, attributes, isContainer,state) {
       //tagかwebcomponentか判断する

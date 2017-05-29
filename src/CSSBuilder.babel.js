@@ -1,5 +1,5 @@
 /***********************************************
-Copyright 2016 - 2016 
+Copyright 2016 - 2016
 ***********************************************/
 /* v1.0.0 */
 
@@ -12,11 +12,16 @@ htmlに指定されたstyleをCSSに分離します。
 ------------------------------------------------*/
   export default class CSSBuilder extends Builder{
 
+    createAttribute(key,attributes) {
+      if(key=='style'){
+        return(`${attributes.join('')}`);
+      }
+    }
     /**
        createAttribute_text
        属性ノードで呼ばれます
        このBuilderではstyle属性の場合は値を返します
-       
+
     **/
     createAttribute_text(key, attribute,state) {
       if(key=='style'){
@@ -36,7 +41,7 @@ htmlに指定されたstyleをCSSに分離します。
        attributes:ノードに含まれる属性が入ってます
        isContainer:子要素を含む場合はtrueになります。
        state:{depth:インデント数}
-       
+
     **/
     createTagElement_open(src, attributes, isContainer,state) {
       if(!src.attributes) return;

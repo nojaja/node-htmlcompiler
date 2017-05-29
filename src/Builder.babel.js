@@ -1,13 +1,13 @@
 /***********************************************
-Copyright 2016 - 2016 
+Copyright 2016 - 2016
 ***********************************************/
 /* v1.0.0 */
 
 /*------------------------------------------------
-Builderのベースクラス 
+Builderのベースクラス
 ------------------------------------------------*/
   export default class Builder {
-    
+
     /**コンストラクタ**/
     constructor(options) {
       var self = this;
@@ -29,12 +29,12 @@ Builderのベースクラス
     getResult(arg) {
       return(`${this.getNodes()}`);
     }
-    
+
     /**
        beforeCreateAttribute
        属性ノードで各Builderを呼び出す前に1回だけ実行されます。
        特定の属性を書き換えるといったケースで利用してください
-       
+
     **/
     beforeCreateAttribute(attributes) {}
 
@@ -43,9 +43,12 @@ Builderのベースクラス
        属性ノードで呼ばれます
        key:属性名
        attribute:ノード
-       
+
     **/
     createAttribute_text(key, attribute) {}
+
+    //createAttribute_keyonly(key){}
+    createAttribute(key, attributes){}
 
     /**
        createAttribute_script
@@ -53,7 +56,7 @@ Builderのベースクラス
        attributeがScriptタイプの場合に呼び出されます
        key:属性名
        attribute:ノード
-       
+
     **/
     createAttribute_script(key, attribute) {}
 
@@ -66,7 +69,7 @@ Builderのベースクラス
        attributes:ノードに含まれる属性が入ってます
        isContainer:子要素を含む場合はtrueになります。
        state:{depth:インデント数}
-       
+
     **/
     createTagElement_open(src, attributes, isContainer,state) {}
 
@@ -75,7 +78,7 @@ Builderのベースクラス
        タグ終了のノードで呼ばれます
        src:{name:タグ名}
        state:{depth:インデント数}
-       
+
     **/
     createTagElement_close(src,state) {}
 
@@ -86,7 +89,7 @@ Builderのベースクラス
        テキストタイプの末端ノードで呼ばれます
        src:{data:テキスト}
        state:{depth:インデント数}
-       
+
     **/
     createTextElement(src,state) {}
 
@@ -99,7 +102,7 @@ Builderのベースクラス
        beforeCompile
        各Builderを呼び出す前に1回だけ実行されます。
        特定のノードを書き換えるといったケースで利用してください
-       
+
     **/
     beforeCompile(src) {}
   }

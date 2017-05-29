@@ -6,11 +6,15 @@ Copyright 2016 - 2016
 import Builder from './Builder.babel.js'
 
   export default class HtmlBuilder extends Builder{
+      createAttribute(key,attributes) {
+        if(attributes.length==0) return(`${key}`);
+        return(`${key}='${attributes.join('')}'`);
+      }
       createAttribute_text(key, attribute,state) {
-        return(`${key}='${attribute.data||''}'`);
+        return(`${attribute.data||''}`);
       }
       createAttribute_script(key, attribute,state) {
-        return(`${key}='{${attribute.data||''}}'`);
+        return(`{${attribute.data||''}}`);
       }
       createTagElement_open(src, attributes, isContainer,state) {
         if(src.name=='script'){

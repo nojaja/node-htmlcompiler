@@ -2,6 +2,9 @@
 import Builder from './Builder.babel.js'
 
 export default class IncrementalDomBuilder extends Builder{
+    createAttribute(key,attributes) {
+      return(`${attributes.join(' ')}`);
+    }
     createAttribute_text(key, attribute,state) {
       return(`${key}=\\'${attribute.data}\\'`);
     };
@@ -19,7 +22,7 @@ export default class IncrementalDomBuilder extends Builder{
     }
     createCommentElement(src,state) {
       return(`${Array(state.depth).join('\t')}/* ${src.data.replace(/\n/g,"").replace(/\'/g,"\\\'")} */`);
-    }  
+    }
     createScriptElement_open(src, isContainer,state) {
       if (src.name == 'if') {
         return(`${Array(state.depth).join('\t')}if( ${src.data}){ `);
