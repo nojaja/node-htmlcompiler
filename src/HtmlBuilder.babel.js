@@ -7,10 +7,10 @@ import Builder from './Builder.babel.js'
 
   export default class HtmlBuilder extends Builder{
       createAttribute_text(key, attribute,state) {
-        return(`${key}='${attribute.data||''}'`);
+        return(`${key}="${attribute.data||''}"`);
       }
       createAttribute_script(key, attribute,state) {
-        return(`${key}='{${attribute.data||''}}'`);
+        return(`${key}="{${attribute.data||''}}"`);
       }
       createTagElement_open(src, attributes, isContainer,state) {
         if(src.name=='script'){
