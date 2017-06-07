@@ -66,11 +66,11 @@ import Builder from './Builder.babel.js'
       //windowオブジェクトにメソッドを追加するコードを生成
       //Generate code to add a method to the window object
       return(`
-window['${this.toUpperFirstLetter(arg.elementName)}'] = React.createClass({
-  render: function() {
+class ${this.toUpperFirstLetter(arg.elementName)} extends React.Component{
+  render(){
     return ${this.getNodes().trim()}
   }
-${arg.script?','+arg.script.data:''}
-});`);
+${arg.script?''+arg.script.data:''}
+};`);
     }
   }
