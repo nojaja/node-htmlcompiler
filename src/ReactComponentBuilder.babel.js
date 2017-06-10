@@ -30,10 +30,10 @@ import Builder from './Builder.babel.js'
     }
     createAttribute(key,attributes) {
       if(attributes.length==0) return(`'${key}':true`);
+      key=(key=="class")?"className":key;
       return(`'${key}':${attributes.join('+')}`);
     }
     createAttribute_text(key, attribute,state) {
-      key=(key=="class")?"className":key;
       if(key=="style"){
          return(`${this.cssToJson(attribute.data)}`);
       }else return(`'${attribute.data}'`);
