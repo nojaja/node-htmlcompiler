@@ -14,6 +14,15 @@ import Builder from './Builder.babel.js'
       this.elementNames = options.elementNames||[];//webcomponentの一覧
       this.attributeDelimiter =",";
     }
+    cssToJson(css){
+      var style = new CSSOM.CSSStyleDeclaration();
+      style.cssText=css;
+      var ret = {};
+      for(var i=0;i<style.length;i++){
+        ret[style[i]]= style[style[i]];
+      }
+      return JSON.stringify(ret);
+    }
     toUpperFirstLetter(str) {
       return str.split('-').map(function(block){
         return block.charAt(0).toUpperCase() + block.substring(1);
@@ -25,7 +34,9 @@ import Builder from './Builder.babel.js'
     }
     createAttribute_text(key, attribute,state) {
       key=(key=="class")?"className":key;
-      return(`'${attribute.data}'`);
+      if(key=="style"){
+         return(`${this.cssToJson(attribute.data)}`);
+      }else return(`'${attribute.data}'`);
     }
     createAttribute_script(key, attribute,state) {
       return(`${attribute.data}`);

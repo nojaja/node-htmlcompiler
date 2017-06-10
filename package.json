@@ -9,7 +9,8 @@
     "async": "^0.2.9",
     "mkdirp": "^0.3.5",
     "semver": "^4.2.0",
-    "htmlparser" : "git+https://github.com/nojaja/node-htmlparser#v2.1"
+    "htmlparser" : "git+https://github.com/nojaja/node-htmlparser#v2.1",
+    "CSSOM" : "git+https://github.com/nojaja/CSSOM"
   },
   "devDependencies": {
     "babel-cli": "^6.0.0",
