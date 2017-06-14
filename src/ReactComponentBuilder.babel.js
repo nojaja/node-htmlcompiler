@@ -81,7 +81,7 @@ import Builder from './Builder.babel.js'
         return(`${Array(state.depth).join('\t')}]}),`);
       }
       if (src.name == 'if') {
-        return(`${Array(state.depth).join('\t')}]},`);
+        return(`${Array(state.depth).join('\t')}],`);
       }
 
       return(`${Array(state.depth).join('\t')}});`);
