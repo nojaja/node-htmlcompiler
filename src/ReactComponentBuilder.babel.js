@@ -62,6 +62,13 @@ import Builder from './Builder.babel.js'
       return(`${Array(state.depth).join('\t')}/* ${src.data.replace(/\n/g,"").replace(/\'/g,"\\\'")} */`);
     }
     createScriptElement_open(src, isContainer,state) {
+
+
+      if (src.name == 'map') {
+        return(`${Array(state.depth).join('\t')}(${src.data}).map(function(element, index, array) { return [ `);
+      }
+
+
       if (src.name == 'if') {
         return(`${Array(state.depth).join('\t')}if( ${src.data}){ `);
       }
@@ -71,6 +78,11 @@ import Builder from './Builder.babel.js'
       return(`${Array(state.depth).join('\t')}${src.data}${(state.nodes.length>state.nodes.pos)?',':''}`);
     }
     createScriptElement_close(src,state) {
+
+      if (src.name == 'map') {
+        return(`${Array(state.depth).join('\t')}]},`);
+      }
+
       return(`${Array(state.depth).join('\t')}});`);
     }
     getResult(arg) {
