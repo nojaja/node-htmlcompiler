@@ -67,10 +67,8 @@ import Builder from './Builder.babel.js'
       if (src.name == 'map') {
         return(`${Array(state.depth).join('\t')}(${src.data}).map(function(element, index, array) { return [ `);
       }
-
-
       if (src.name == 'if') {
-        return(`${Array(state.depth).join('\t')}if( ${src.data}){ `);
+        return(`${Array(state.depth).join('\t')}( ${src.data})?[ `);
       }
       if (src.name == 'each') {
         return(`${Array(state.depth).join('\t')}each( ${src.data}){ `);
@@ -80,6 +78,9 @@ import Builder from './Builder.babel.js'
     createScriptElement_close(src,state) {
 
       if (src.name == 'map') {
+        return(`${Array(state.depth).join('\t')}]}),`);
+      }
+      if (src.name == 'if') {
         return(`${Array(state.depth).join('\t')}]},`);
       }
 
