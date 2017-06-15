@@ -36,7 +36,7 @@ import Builder from './Builder.babel.js'
     createAttribute_text(key, attribute,state) {
       if(key=="style"){
          return(`${this.cssToJson(attribute.data)}`);
-      }else return(`'${attribute.data}'`);
+      }else return(`'${attribute.data.replace(/\'/g, '\\\'')}'`);
     }
     createAttribute_script(key, attribute,state) {
       return(`${attribute.data}`);
