@@ -58,11 +58,10 @@ import Builder from './Builder.babel.js'
       //elementNamesに登録されていたらwebcomponent
       // webcomponent if registered in elementNames
       var tagName= ( ~src.name.indexOf('-') || src.name.charAt(0)==src.name.charAt(0).toUpperCase() || this.elementNames.indexOf(src.name.toLowerCase()) >= 0)? this.toUpperFirstLetter(src.name):`'${src.name}'`;
-      return(`${Array(state.depth).join('\t')}React.createElement(${tagName},${attributes?'{'+attributes+'}':'null'}${isContainer?',':(nexttype(src))?'),':')'}`);
+      return(`${Array(state.depth).join('\t')}React.createElement(${tagName},${attributes?'{'+attributes+'}':'null'}${isContainer?',':(this.nexttype(src))?'),':')'}`);
     }
     createTagElement_close(src,state) {
-      return(`${Array(state.depth).join('\t')})${(nexttype(src))?',':''}`);
-      //return(`${Array(state.depth).join('\t')})${(state.nodes.length>state.nodes.pos && nexttype(src))?',':''}`);
+      return(`${Array(state.depth).join('\t')})${(this.nexttype(src))?',':''}`);
     }
     createTextElement(src,state) {
       return(`${Array(state.depth).join('\t')}'${src.data.replace(/\n/g,"").replace(/\'/g,"\\\'")}'${(state.nodes.length>state.nodes.pos)?',':''}`);
