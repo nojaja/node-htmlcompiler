@@ -41,6 +41,14 @@ import Builder from './Builder.babel.js'
     createAttribute_script(key, attribute,state) {
       return(`${attribute.data}`);
     }
+
+
+    nexttype(_src){
+            if(_src.nextSibling==null) return false;
+            if(_src.nextSibling.type!="comment") return true
+            return nexttype(_src.nextSibling);
+    }
+
     createTagElement_open(src, attributes, isContainer,state) {
       //tagかwebcomponentか判断する
       // Judge whether it is tag or webcomponent
@@ -50,16 +58,9 @@ import Builder from './Builder.babel.js'
       //elementNamesに登録されていたらwebcomponent
       // webcomponent if registered in elementNames
       var tagName= ( ~src.name.indexOf('-') || src.name.charAt(0)==src.name.charAt(0).toUpperCase() || this.elementNames.indexOf(src.name.toLowerCase()) >= 0)? this.toUpperFirstLetter(src.name):`'${src.name}'`;
-      return(`${Array(state.depth).join('\t')}React.createElement(${tagName},${attributes?'{'+attributes+'}':'null'}${isContainer?',':(state.nodes.length>state.nodes.pos)?'),':')'}`);
+      return(`${Array(state.depth).join('\t')}React.createElement(${tagName},${attributes?'{'+attributes+'}':'null'}${isContainer?',':(nexttype(src))?'),':')'}`);
     }
     createTagElement_close(src,state) {
-
-      function nexttype(_src){
-        if(_src.nextSibling==null) return false;
-        if(_src.nextSibling.type!="comment") return true
-        return nexttype(_src.nextSibling);
-      }
-      console.log(src,nexttype(src));
       return(`${Array(state.depth).join('\t')})${(nexttype(src))?',':''}`);
       //return(`${Array(state.depth).join('\t')})${(state.nodes.length>state.nodes.pos && nexttype(src))?',':''}`);
     }
