@@ -55,9 +55,9 @@ import Builder from './Builder.babel.js'
     createTagElement_close(src,state) {
 
       function nexttype(_src){
-        if(src.nextSibling==null) return false;
-        if(src.nextSibling.type!="comment") return true
-        return nexttype(src.nextSibling);
+        if(_src.nextSibling==null) return false;
+        if(_src.nextSibling.type!="comment") return true
+        return nexttype(_src.nextSibling);
       }
 
       return(`${Array(state.depth).join('\t')})${(state.nodes.length>state.nodes.pos && nexttype(src))?',':''}`);
