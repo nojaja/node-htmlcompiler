@@ -53,7 +53,7 @@ import Builder from './Builder.babel.js'
       return(`${Array(state.depth).join('\t')}React.createElement(${tagName},${attributes?'{'+attributes+'}':'null'}${isContainer?',':(state.nodes.length>state.nodes.pos)?'),':')'}`);
     }
     createTagElement_close(src,state) {
-      return(`${Array(state.depth).join('\t')})${(state.nodes.length>state.nodes.pos)?',':''}`);
+      return(`${Array(state.depth).join('\t')})${(state.nodes.length>state.nodes.pos && src.nextSibling.type!="comment")?',':''}`);
     }
     createTextElement(src,state) {
       return(`${Array(state.depth).join('\t')}'${src.data.replace(/\n/g,"").replace(/\'/g,"\\\'")}'${(state.nodes.length>state.nodes.pos)?',':''}`);
