@@ -46,7 +46,7 @@ import Builder from './Builder.babel.js'
     nexttype(_src){
             if(_src.nextSibling==null) return false;
             if(_src.nextSibling.type!="comment") return true
-            return nexttype(_src.nextSibling);
+            return this.nexttype(_src.nextSibling);
     }
 
     createTagElement_open(src, attributes, isContainer,state) {
