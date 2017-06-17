@@ -59,8 +59,9 @@ import Builder from './Builder.babel.js'
         if(_src.nextSibling.type!="comment") return true
         return nexttype(_src.nextSibling);
       }
-
-      return(`${Array(state.depth).join('\t')})${(state.nodes.length>state.nodes.pos && nexttype(src))?',':''}`);
+      console.log(src,nexttype(src));
+      return(`${Array(state.depth).join('\t')})${(nexttype(src))?',':''}`);
+      //return(`${Array(state.depth).join('\t')})${(state.nodes.length>state.nodes.pos && nexttype(src))?',':''}`);
     }
     createTextElement(src,state) {
       return(`${Array(state.depth).join('\t')}'${src.data.replace(/\n/g,"").replace(/\'/g,"\\\'")}'${(state.nodes.length>state.nodes.pos)?',':''}`);
