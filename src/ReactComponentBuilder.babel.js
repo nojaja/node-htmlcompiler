@@ -53,7 +53,14 @@ import Builder from './Builder.babel.js'
       return(`${Array(state.depth).join('\t')}React.createElement(${tagName},${attributes?'{'+attributes+'}':'null'}${isContainer?',':(state.nodes.length>state.nodes.pos)?'),':')'}`);
     }
     createTagElement_close(src,state) {
-      return(`${Array(state.depth).join('\t')})${(state.nodes.length>state.nodes.pos && src.nextSibling.type!="comment")?',':''}`);
+
+      function nexttype(_src){
+        if(src.nextSibling==null) return false;
+        if(src.nextSibling.type!="comment") return true
+        return nexttype(src.nextSibling);
+      }
+
+      return(`${Array(state.depth).join('\t')})${(state.nodes.length>state.nodes.pos && nexttype(src))?',':''}`);
     }
     createTextElement(src,state) {
       return(`${Array(state.depth).join('\t')}'${src.data.replace(/\n/g,"").replace(/\'/g,"\\\'")}'${(state.nodes.length>state.nodes.pos)?',':''}`);
