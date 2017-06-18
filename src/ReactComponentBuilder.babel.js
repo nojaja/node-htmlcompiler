@@ -19,7 +19,7 @@ import Builder from './Builder.babel.js'
       style.cssText=css;
       var ret = {};
       for(var i=0;i<style.length;i++){
-        ret[style[i]]= style[style[i]];
+        ret[style[i].replace(/\-/g, '')]= style[style[i]];
       }
       return JSON.stringify(ret);
     }
