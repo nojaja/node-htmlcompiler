@@ -4,13 +4,13 @@
   "description": "",
   "main": "./lib/htmlcompiler.js",
   "dependencies": {
-    "commander": "^2.2.0",
-    "log4js": "^0.6.22",
     "async": "^0.2.9",
+    "commander": "^2.2.0",
+    "cssom": "git+https://github.com/nojaja/CSSOM",
+    "htmlparser": "git+https://github.com/nojaja/node-htmlparser#v2.1",
+    "log4js": "^0.6.22",
     "mkdirp": "^0.3.5",
-    "semver": "^4.2.0",
-    "htmlparser" : "git+https://github.com/nojaja/node-htmlparser#v2.1",
-    "CSSOM" : "git+https://github.com/nojaja/CSSOM"
+    "semver": "^4.2.0"
   },
   "devDependencies": {
     "babel-cli": "^6.0.0",

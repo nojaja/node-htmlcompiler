@@ -6,6 +6,7 @@ Copyright 2016 - 2016
 
 //http://yutapon.hatenablog.com/entry/2015/02/09/090000
 
+import CSSOM from 'cssom'
 import Compiler from './htmlcompiler.babel.js'
 import Builder from './Builder.babel.js'
 import DebugBuilder from './DebugBuilder.babel.js'
