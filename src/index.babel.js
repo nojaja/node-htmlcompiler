@@ -19,6 +19,7 @@ import ReactRootComponentBuilder from './ReactRootComponentBuilder.babel.js'
 
 
 if (typeof window === 'undefined') {
+global.CSSOM = CSSOM;
 global.Builder = Builder;
 global.DebugBuilder = DebugBuilder;
 global.HtmlBuilder = HtmlBuilder;
@@ -29,6 +30,7 @@ global.ReactComponentBuilder = ReactComponentBuilder;
 global.WebComponentParser = WebComponentParser;
 global.ReactRootComponentBuilder = ReactRootComponentBuilder;
 }else{
+window.CSSOM = CSSOM;
 window.Builder = Builder;
 window.DebugBuilder = DebugBuilder;
 window.HtmlBuilder = HtmlBuilder;
