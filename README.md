@@ -6,7 +6,7 @@ webcomponents to html compiler
 
 ## Installing
 
-	npm install htmlcompiler
+	npm install @nojaja/htmlcompiler
 
 
 ## Running Tests

@@ -11,7 +11,7 @@
   ],
   "main": "./lib/htmlcompiler.js",
   "dependencies": {
-    "@nojaja/htmlparser": "^2.1.0",
+    "@nojaja/htmlparser": "^2.1.1",
     "cssom": "git+https://github.com/nojaja/CSSOM"
   },
   "devDependencies": {
