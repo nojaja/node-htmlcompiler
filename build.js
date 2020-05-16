@@ -20,7 +20,7 @@
 	global.fs = require('fs');
 	global.path = require('path');
 
-	var htmlparser = require("htmlparser");
+	var htmlparser = require("@nojaja/htmlparser");
 	var htmlcompiler = require("./lib/htmlcompiler");
 	
 	var webComponentParser = new WebComponentParser({ builder: ReactComponentBuilder });

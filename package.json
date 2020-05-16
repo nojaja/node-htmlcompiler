@@ -2,13 +2,13 @@
   "name": "@nojaja/htmlcompiler",
   "version": "1.0.2",
   "description": "webcomponents to html compiler",
-	"keywords": [
-		"html",
-		"xml",
-		"htmlcompiler",
-		"webcomponents",
-		"htmlparser"
-	],
+  "keywords": [
+    "html",
+    "xml",
+    "htmlcompiler",
+    "webcomponents",
+    "htmlparser"
+  ],
   "main": "./lib/htmlcompiler.js",
   "dependencies": {
     "@nojaja/htmlparser": "^2.1.0",
