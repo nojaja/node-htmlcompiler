@@ -1,11 +1,18 @@
 {
-  "name": "htmlcompiler",
-  "version": "1.0.0",
-  "description": "",
+  "name": "@nojaja/htmlcompiler",
+  "version": "1.0.2",
+  "description": "webcomponents to html compiler",
+	"keywords": [
+		"html",
+		"xml",
+		"htmlcompiler",
+		"webcomponents",
+		"htmlparser"
+	],
   "main": "./lib/htmlcompiler.js",
   "dependencies": {
-    "cssom": "git+https://github.com/nojaja/CSSOM",
-    "htmlparser": "git+https://github.com/nojaja/node-htmlparser#v2.1"
+    "@nojaja/htmlparser": "^2.1.0",
+    "cssom": "git+https://github.com/nojaja/CSSOM"
   },
   "devDependencies": {
     "@babel/core": "^7.9.6",
@@ -32,16 +39,10 @@
     "type": "git",
     "url": "https://github.com/nojaja/node-htmlcompiler.git"
   },
-  "keywords": [
-    "html",
-    "xml",
-    "rss",
-    "parser"
-  ],
   "directories": {
     "lib": "./lib"
   },
-  "author": "",
+  "author": "nojaja",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/nojaja/node-htmlcompiler/issues"
