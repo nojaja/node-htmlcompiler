@@ -11,21 +11,21 @@
   ],
   "main": "./lib/htmlcompiler.js",
   "dependencies": {
-    "@nojaja/htmlparser": "^2.1.1",
-    "cssom": "git+https://github.com/nojaja/CSSOM"
+    "@nojaja/htmlparser": "^2.1.2",
+    "cssom": "git+https://github.com/nojaja/CSSOM.git"
   },
   "devDependencies": {
-    "@babel/core": "^7.9.6",
-    "@babel/preset-env": "^7.9.6",
+    "@babel/core": "^7.14.3",
+    "@babel/preset-env": "^7.14.4",
     "async": "^0.2.9",
     "browserify": "13.1.1",
     "commander": "^2.2.0",
     "log4js": "^0.6.22",
     "mkdirp": "^0.3.5",
     "semver": "^4.2.0",
-    "webpack": "^4.43.0",
-    "webpack-cli": "^3.3.11",
-    "webpack-dev-server": "^3.11.0"
+    "webpack": "^4.46.0",
+    "webpack-cli": "^3.3.12",
+    "webpack-dev-server": "^3.11.2"
   },
   "scripts": {
     "start": "node build.js",
